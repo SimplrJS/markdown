@@ -6,5 +6,5 @@ notifications:
 node_js:
 - stable
 script:
-- npm tslint
+- npm run tslint
 - npm test
