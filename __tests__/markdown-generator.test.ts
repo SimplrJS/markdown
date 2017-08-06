@@ -114,7 +114,7 @@ describe("Code", () => {
             "   return a + b;",
             "}"
         ];
-        const result = MarkdownGenerator.codeBlock(codeExample);
+        const result = MarkdownGenerator.code(codeExample);
 
         const expectedResult = [
             "```",
@@ -135,7 +135,7 @@ describe("Code", () => {
             "   return a + b;",
             "}"
         ];
-        const result = MarkdownGenerator.codeBlock(codeExample, { lang: "typescript" });
+        const result = MarkdownGenerator.code(codeExample, { lang: "typescript" });
 
         const expectedResult = [
             "```typescript",
@@ -354,5 +354,30 @@ describe("Image", () => {
     it("Simple image with a hover text", () => {
         const result = MarkdownGenerator.image("Alt text", "https://google.com/", "Hover text");
         expect(result).toBe("![Alt text](https://google.com/ \"Hover text\")");
+    });
+});
+
+describe("Horizontal rule", () => {
+    it("Simple horizontal rule", () => {
+        const result = MarkdownGenerator.horizontalRule();
+        expect(result).toBe("---");
+    });
+
+    it("Custom length", () => {
+        const result = MarkdownGenerator.horizontalRule(undefined, 10);
+        expect(result).toBe("----------");
+    });
+
+    it("Custom symbol", () => {
+        const result = MarkdownGenerator.horizontalRule("*");
+        expect(result).toBe("***");
+    });
+
+    it("Throws when length is lower than 3", () => {
+        expect(() => MarkdownGenerator.horizontalRule(undefined, 0)).toThrow();
+    });
+
+    it("Throws when symbol is not in allowed list.", () => {
+        expect(() => MarkdownGenerator.horizontalRule("1" as any)).toThrow();
     });
 });

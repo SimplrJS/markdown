@@ -1,13 +1,14 @@
 import * as S from "string";
 
 import {
-    CodeBlockOptions,
+    CodeOptions,
     EmphasisOptions,
     TableHeader,
     TableOptions,
     UnorderedListOptions,
     UnorderListSymbols,
-    MarkdownList
+    MarkdownList,
+    HorizontalRuleSymbol
 } from "./contracts";
 
 import { ListGenerator } from "./generators/list-generator";
@@ -105,7 +106,7 @@ export class MarkdownGenerator {
             "+",
             "-"
         ];
-        let symbol = "*";
+        let symbol: UnorderListSymbols = "*";
 
         if (options != null && options.symbol != null) {
             if (allowedSymbols.indexOf(options.symbol) === -1) {
@@ -120,6 +121,29 @@ export class MarkdownGenerator {
 
     public static orderedList(list: MarkdownList): string[] {
         return ListGenerator.renderList(list, 0, true);
+    }
+
+    public static horizontalRule(symbol?: HorizontalRuleSymbol, length?: number): string {
+        const allowedSymbols: HorizontalRuleSymbol[] = [
+            "*",
+            "-",
+            "_"
+        ];
+        const defaultSymbol: HorizontalRuleSymbol = "-";
+        const defaultLength = 3;
+
+        if (symbol != null && allowedSymbols.indexOf(symbol) === -1) {
+            throw Error(`Horizontal Rule: Symbol ${symbol} is not allowed. Please use: ${allowedSymbols.join(", ")} instead.`);
+        }
+
+        if (length != null && length < 3) {
+            throw Error(`Horizontal Rule: Minimum length is ${defaultLength}`);
+        }
+
+        const currentSymbol = symbol || defaultSymbol;
+        const currentLength = length || defaultLength;
+
+        return S(currentSymbol).pad(currentLength, currentSymbol).s;
     }
 
     public static italic(text: string, options?: EmphasisOptions): string {
@@ -162,7 +186,7 @@ export class MarkdownGenerator {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    public static codeBlock(text: string | string[], options?: CodeBlockOptions): string[] {
+    public static code(text: string | string[], options?: CodeOptions): string[] {
         let sanitizedText: string[] = [];
 
         if (typeof text === "string") {

@@ -2,7 +2,7 @@ export interface EmphasisOptions {
     useUnderscores?: boolean;
 }
 
-export interface CodeBlockOptions {
+export interface CodeOptions {
     lang?: string;
 }
 
@@ -25,3 +25,5 @@ export type TableAlign = "left" | "center" | "right" | "none";
 
 // tslint:disable-next-line:no-empty-interface
 export interface MarkdownList extends Array<string | MarkdownList> { }
+
+export type HorizontalRuleSymbol = "-" | "*" | "_";
