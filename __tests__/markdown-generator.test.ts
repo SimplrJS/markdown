@@ -317,3 +317,30 @@ describe("Table", () => {
 
     // TODO: Add more tests.
 });
+
+describe("Links", () => {
+    it("Simple link", () => {
+        const result = MarkdownGenerator.link("Some text", "https://google.com/");
+        expect(result).toBe("[Some text](https://google.com/)");
+    });
+
+    it("Simple link with hover text", () => {
+        const result = MarkdownGenerator.link("Some text", "https://google.com/", "Hover text");
+        expect(result).toBe("[Some text](https://google.com/ \"Hover text\")");
+    });
+
+    it("Link to definition", () => {
+        const result = MarkdownGenerator.link("Some text", "Google", true);
+        expect(result).toBe("[Some text][Google]");
+    });
+
+    it("Link definition", () => {
+        const result = MarkdownGenerator.linkDefinition("Some text", "https://google.com/");
+        expect(result).toBe("[Some text]: https://google.com/");
+    });
+
+    it("Link definition with hover text", () => {
+        const result = MarkdownGenerator.linkDefinition("Some text", "https://google.com/", "Hover text");
+        expect(result).toBe("[Some text]: https://google.com/ \"Hover text\"");
+    });
+});

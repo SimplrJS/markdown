@@ -64,6 +64,37 @@ export class MarkdownGenerator {
         return lines;
     }
 
+    public static link(text: string, definitionName: string, definition: boolean): string;
+    public static link(text: string, url: string, linkTitle?: string): string;
+    public static link(text: string, target: string, arg?: string | boolean): string {
+        const sanitizedText = S(text).trim().s;
+
+        // Link to a link definition
+        if (typeof arg === "boolean") {
+            return `[${sanitizedText}][${target}]`;
+        }
+
+        // Normal link
+        let targetText = target;
+
+        if (arg != null) {
+            targetText += ` "${arg}"`;
+        }
+
+        return `[${sanitizedText}](${targetText})`;
+    }
+
+    public static linkDefinition(text: string, url: string, linkTitle?: string): string {
+        const sanitizedText = S(text).trim().s;
+        let linkTitleText = "";
+
+        if (linkTitle != null) {
+            linkTitleText = `"${linkTitle}"`;
+        }
+
+        return S(`[${sanitizedText}]: ${url} ${linkTitleText}`).trim().s;
+    }
+
     public static unorderedList(list: MarkdownList, options?: UnorderedListOptions): string[] {
         const allowedSymbols: UnorderListSymbols[] = [
             "*",
