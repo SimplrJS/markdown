@@ -95,6 +95,10 @@ export class MarkdownGenerator {
         return S(`[${sanitizedText}]: ${url} ${linkTitleText}`).trim().s;
     }
 
+    public static image(altText: string, url: string, title?: string): string {
+        return "!" + this.link(altText, url, title);
+    }
+
     public static unorderedList(list: MarkdownList, options?: UnorderedListOptions): string[] {
         const allowedSymbols: UnorderListSymbols[] = [
             "*",

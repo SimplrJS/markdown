@@ -324,7 +324,7 @@ describe("Links", () => {
         expect(result).toBe("[Some text](https://google.com/)");
     });
 
-    it("Simple link with hover text", () => {
+    it("Simple link with a hover text", () => {
         const result = MarkdownGenerator.link("Some text", "https://google.com/", "Hover text");
         expect(result).toBe("[Some text](https://google.com/ \"Hover text\")");
     });
@@ -339,8 +339,20 @@ describe("Links", () => {
         expect(result).toBe("[Some text]: https://google.com/");
     });
 
-    it("Link definition with hover text", () => {
+    it("Link definition with a hover text", () => {
         const result = MarkdownGenerator.linkDefinition("Some text", "https://google.com/", "Hover text");
         expect(result).toBe("[Some text]: https://google.com/ \"Hover text\"");
+    });
+});
+
+describe("Image", () => {
+    it("Simple image", () => {
+        const result = MarkdownGenerator.image("Alt text", "https://path.com/image.jpg");
+        expect(result).toBe("![Alt text](https://path.com/image.jpg)");
+    });
+
+    it("Simple image with a hover text", () => {
+        const result = MarkdownGenerator.image("Alt text", "https://google.com/", "Hover text");
+        expect(result).toBe("![Alt text](https://google.com/ \"Hover text\")");
     });
 });
