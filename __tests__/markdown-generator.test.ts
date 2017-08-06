@@ -47,9 +47,23 @@ describe("Blockquotes", () => {
         expect(result[0]).toBe(`> ${text}`);
     });
 
-    fit("Multiline working example", () => {
-        const text = S("Some text\n").repeat(3).s;
+    it("Multiline working example", () => {
+        const text = "Some text \n\n Other Text";
         const result = MarkdownGenerator.blockquote(text);
-        expect(result).toBe(`> ${text}`);
+
+        const expectedResult = [
+            "> Some text",
+            ">",
+            "> Other Text"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
     });
+
+    /**
+     * TODO: "Blockquotes can contain other Markdown elements, including headers, lists, and code blocks"
+     * @see https://daringfireball.net/projects/markdown/syntax#blockquote
+     */
 });

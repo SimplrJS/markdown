@@ -41,6 +41,7 @@ export class MarkdownGenerator {
 
         S(text).lines().forEach(x => {
             if (x === "") {
+                lines.push(">");
                 return;
             }
             const sanitizedText = S(x).trim().s;
