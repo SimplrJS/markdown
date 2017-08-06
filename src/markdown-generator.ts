@@ -225,4 +225,12 @@ export class MarkdownGenerator {
     public static table(headers: string[] | TableHeader[], content: string[][], options?: TableOptions): string[] {
         return TableGenerator.renderTable(headers, content, options);
     }
+
+    /**
+     * Escapes string.
+     * @see https://daringfireball.net/projects/markdown/syntax#backslash
+     */
+    public static escapeString(text: string): string {
+        return text.replace(/[\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!]/g, "\\$&");
+    }
 }
