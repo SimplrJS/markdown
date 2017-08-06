@@ -1,7 +1,6 @@
 import * as S from "string";
 
-// tslint:disable-next-line:no-empty-interface
-export interface MarkdownList extends Array<string | MarkdownList> { }
+import { MarkdownList } from "../contracts";
 
 export class ListGenerator {
     public static renderList(list: MarkdownList, level: number, ordered: boolean, symbol?: string): string[] {
@@ -29,7 +28,7 @@ export class ListGenerator {
         return renderedList;
     }
 
-    public static getListItem(text: string, level: number, symbol: string): string {
+    protected static getListItem(text: string, level: number, symbol: string): string {
         const space = S(" ").repeat(level * 4).s;
         const sanitizedText = S(text).trim();
 

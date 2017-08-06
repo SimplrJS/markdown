@@ -1,4 +1,5 @@
 import { MarkdownGenerator } from "../src/markdown-generator";
+import { TableHeader } from "../src/contracts";
 import * as S from "string";
 
 describe("Header", () => {
@@ -269,10 +270,50 @@ describe("Lists", () => {
             "        1. Three Two One",
         ];
 
-        console.log(result.join("\n"));
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+});
+
+describe("Table", () => {
+    it("Simple example", () => {
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number"]
+        ];
+        const result = MarkdownGenerator.table(headers, rows);
+        const expectedResult = [
+            "| Property | Value  |",
+            "| -------- | ------ |",
+            "| Name     | string |",
+            "| Age      | number |"
+        ];
 
         expectedResult.forEach((x, index) => {
             expect(result[index]).toBe(x);
         });
     });
+
+    it("Removes a column if it's empty", () => {
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name"],
+            ["Age"]
+        ];
+        const result = MarkdownGenerator.table(headers, rows, { removeColummIfEmpty: true });
+        const expectedResult = [
+            "| Property |",
+            "| -------- |",
+            "| Name     |",
+            "| Age      |"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+
+    // TODO: Add more tests.
 });

@@ -1,21 +1,17 @@
 import * as S from "string";
 
-import { ListGenerator, MarkdownList } from "./generators/list-generator";
+import {
+    CodeBlockOptions,
+    EmphasisOptions,
+    TableHeader,
+    TableOptions,
+    UnorderedListOptions,
+    UnorderListSymbols,
+    MarkdownList
+} from "./contracts";
 
-export interface EmphasisOptions {
-    useUnderscores?: boolean;
-    //escape: boolean;
-}
-
-export interface CodeBlockOptions {
-    lang?: string;
-}
-
-export interface UnorderedListOptions {
-    symbol?: UnorderListSymbols;
-}
-
-export type UnorderListSymbols = "*" | "+" | "-";
+import { ListGenerator } from "./generators/list-generator";
+import { TableGenerator } from "./generators/table-generator";
 
 export class MarkdownGenerator {
     public static header(text: string, headerLevel: number, closing: boolean = false): string {
@@ -152,5 +148,9 @@ export class MarkdownGenerator {
             ...sanitizedText,
             codeBlockTag
         ];
+    }
+
+    public static table(headers: string[] | TableHeader[], content: string[][], options?: TableOptions): string[] {
+        return TableGenerator.renderTable(headers, content, options);
     }
 }
