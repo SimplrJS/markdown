@@ -149,3 +149,130 @@ describe("Code", () => {
         });
     });
 });
+
+describe("Lists", () => {
+    it("Unordered simple list", () => {
+        const list = [
+            "One",
+            "Two",
+            "Three"
+        ];
+
+        const result = MarkdownGenerator.unorderedList(list);
+        const expectedResult = [
+            "* One",
+            "* Two",
+            "* Three"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+
+    it("Unordered deep list", () => {
+        const list = [
+            "One",
+            "Two",
+            "Three",
+            [
+                "Three One",
+                "Three Two",
+                [
+                    "Three Two One"
+                ]
+            ]
+        ];
+
+        const result = MarkdownGenerator.unorderedList(list);
+        const expectedResult = [
+            "* One",
+            "* Two",
+            "* Three",
+            "    * Three One",
+            "    * Three Two",
+            "        * Three Two One",
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+
+    it("Unordered simple list with a custom symbol", () => {
+        const list = [
+            "One",
+            "Two",
+            "Three"
+        ];
+
+        const result = MarkdownGenerator.unorderedList(list, {
+            symbol: "-"
+        });
+        const expectedResult = [
+            "- One",
+            "- Two",
+            "- Three"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+
+    it("UnorderedList should throw when given not supported symbol", () => {
+        expect(() => MarkdownGenerator.unorderedList([], {
+            symbol: "a" as any
+        })).toThrow();
+    });
+
+    it("Ordered simple list", () => {
+        const list = [
+            "One",
+            "Two",
+            "Three"
+        ];
+
+        const result = MarkdownGenerator.orderedList(list);
+        const expectedResult = [
+            "1. One",
+            "2. Two",
+            "3. Three"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+
+    it("Ordered deep list", () => {
+        const list = [
+            "One",
+            "Two",
+            "Three",
+            [
+                "Three One",
+                "Three Two",
+                [
+                    "Three Two One"
+                ]
+            ]
+        ];
+
+        const result = MarkdownGenerator.orderedList(list);
+        const expectedResult = [
+            "1. One",
+            "2. Two",
+            "3. Three",
+            "    1. Three One",
+            "    2. Three Two",
+            "        1. Three Two One",
+        ];
+
+        console.log(result.join("\n"));
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+});

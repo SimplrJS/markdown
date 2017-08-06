@@ -1,5 +1,7 @@
 import * as S from "string";
 
+import { ListGenerator, MarkdownList } from "./generators/list-generator";
+
 export interface EmphasisOptions {
     useUnderscores?: boolean;
     //escape: boolean;
@@ -8,6 +10,12 @@ export interface EmphasisOptions {
 export interface CodeBlockOptions {
     lang?: string;
 }
+
+export interface UnorderedListOptions {
+    symbol?: UnorderListSymbols;
+}
+
+export type UnorderListSymbols = "*" | "+" | "-";
 
 export class MarkdownGenerator {
     public static header(text: string, headerLevel: number, closing: boolean = false): string {
@@ -58,6 +66,29 @@ export class MarkdownGenerator {
         });
 
         return lines;
+    }
+
+    public static unorderedList(list: MarkdownList, options?: UnorderedListOptions): string[] {
+        const allowedSymbols: UnorderListSymbols[] = [
+            "*",
+            "+",
+            "-"
+        ];
+        let symbol = "*";
+
+        if (options != null && options.symbol != null) {
+            if (allowedSymbols.indexOf(options.symbol) === -1) {
+                throw Error(`Unordered list: Symbol ${options.symbol} is not allowed. Please use: ${allowedSymbols.join(", ")} instead.`);
+            }
+
+            symbol = options.symbol;
+        }
+
+        return ListGenerator.renderList(list, 0, false, symbol);
+    }
+
+    public static orderedList(list: MarkdownList): string[] {
+        return ListGenerator.renderList(list, 0, true);
     }
 
     public static italic(text: string, options?: EmphasisOptions): string {
