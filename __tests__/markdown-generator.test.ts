@@ -67,3 +67,35 @@ describe("Blockquotes", () => {
      * @see https://daringfireball.net/projects/markdown/syntax#blockquote
      */
 });
+
+describe("Emphasis", () => {
+    it("italic using asterisks", () => {
+        const text = "Some text  ";
+        const result = MarkdownGenerator.italic(text);
+        expect(result).toBe("*Some text*");
+    });
+
+    it("italic using underscores", () => {
+        const text = "Some text  ";
+        const result = MarkdownGenerator.italic(text, { useUnderscores: true });
+        expect(result).toBe("_Some text_");
+    });
+
+    it("bold using asterisks", () => {
+        const text = "Some text  ";
+        const result = MarkdownGenerator.bold(text);
+        expect(result).toBe(`**Some text**`);
+    });
+
+    it("bold using underscores", () => {
+        const text = "Some text  ";
+        const result = MarkdownGenerator.bold(text, { useUnderscores: true });
+        expect(result).toBe(`__Some text__`);
+    });
+
+    it("strikethrough", () => {
+        const text = "Some text  ";
+        const result = MarkdownGenerator.strikethrough(text);
+        expect(result).toBe(`~~Some text~~`);
+    });
+});

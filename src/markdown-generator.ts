@@ -1,5 +1,10 @@
 import * as S from "string";
 
+export interface EmphasisOptions {
+    useUnderscores?: boolean;
+    //escape: boolean;
+}
+
 export class MarkdownGenerator {
     public static header(text: string, headerLevel: number, closing: boolean = false): string {
         if (!isFinite(headerLevel)) {
@@ -49,5 +54,31 @@ export class MarkdownGenerator {
         });
 
         return lines;
+    }
+
+    public static italic(text: string, options?: EmphasisOptions): string {
+        const sanitizedText = S(text).trim().s;
+
+        if (options != null && options.useUnderscores) {
+            return `_${sanitizedText}_`;
+        }
+
+        return `*${sanitizedText}*`;
+    }
+
+    public static bold(text: string, options?: EmphasisOptions): string {
+        const sanitizedText = S(text).trim().s;
+
+        if (options != null && options.useUnderscores) {
+            return `__${sanitizedText}__`;
+        }
+
+        return `**${sanitizedText}**`;
+    }
+
+    public static strikethrough(text: string): string {
+        const sanitizedText = S(text).trim().s;
+
+        return `~~${sanitizedText}~~`;
     }
 }
