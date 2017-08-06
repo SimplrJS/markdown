@@ -1,0 +1,38 @@
+{
+  "name": "@simplrjs/markdown",
+  "version": "0.0.1",
+  "description": "Markdown generator",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "tslint": "tslint --project . --config ./tslint.json",
+    "test-watch": "jest --watchAll",
+    "build": "tsc -p ."
+  },
+  "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
+  "dependencies": {
+    "@types/string": "0.0.28",
+    "string": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.5",
+    "@types/sinon": "^2.3.3",
+    "jest": "^20.0.4",
+    "sinon": "^2.4.1",
+    "ts-jest": "^20.0.7",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
