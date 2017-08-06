@@ -5,6 +5,10 @@ export interface EmphasisOptions {
     //escape: boolean;
 }
 
+export interface CodeBlockOptions {
+    lang?: string;
+}
+
 export class MarkdownGenerator {
     public static header(text: string, headerLevel: number, closing: boolean = false): string {
         if (!isFinite(headerLevel)) {
@@ -80,5 +84,42 @@ export class MarkdownGenerator {
         const sanitizedText = S(text).trim().s;
 
         return `~~${sanitizedText}~~`;
+    }
+
+    /**
+     * Github flavored markdown
+     * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
+     */
+    public static inlineCode(text: string): string {
+        const sanitizedText = S(text).trim().s;
+
+        return `\`${sanitizedText}\``;
+    }
+
+    /**
+     * Github flavored markdown
+     * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
+     */
+    public static codeBlock(text: string | string[], options?: CodeBlockOptions): string[] {
+        let sanitizedText: string[] = [];
+
+        if (typeof text === "string") {
+            sanitizedText = S(text).trim().lines();
+        } else {
+            sanitizedText = text;
+        }
+
+        const codeBlockTag = "```";
+        let header = codeBlockTag;
+
+        if (options != null && options.lang != null) {
+            header += options.lang;
+        }
+
+        return [
+            header,
+            ...sanitizedText,
+            codeBlockTag
+        ];
     }
 }

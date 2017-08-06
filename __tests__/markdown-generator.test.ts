@@ -90,12 +90,62 @@ describe("Emphasis", () => {
     it("bold using underscores", () => {
         const text = "Some text  ";
         const result = MarkdownGenerator.bold(text, { useUnderscores: true });
-        expect(result).toBe(`__Some text__`);
+        expect(result).toBe("__Some text__");
     });
 
     it("strikethrough", () => {
         const text = "Some text  ";
         const result = MarkdownGenerator.strikethrough(text);
-        expect(result).toBe(`~~Some text~~`);
+        expect(result).toBe("~~Some text~~");
+    });
+});
+
+describe("Code", () => {
+    it("inline", () => {
+        const text = "git status";
+        const result = MarkdownGenerator.inlineCode(text);
+        expect(result).toBe("`git status`");
+    });
+
+    it("block with array of text without language option", () => {
+        const codeExample = [
+            "function sum(a: number, b: number): number {",
+            "   return a + b;",
+            "}"
+        ];
+        const result = MarkdownGenerator.codeBlock(codeExample);
+
+        const expectedResult = [
+            "```",
+            "function sum(a: number, b: number): number {",
+            "   return a + b;",
+            "}",
+            "```"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
+
+    it("block with array of text with language option", () => {
+        const codeExample = [
+            "function sum(a: number, b: number): number {",
+            "   return a + b;",
+            "}"
+        ];
+        const result = MarkdownGenerator.codeBlock(codeExample, { lang: "typescript" });
+
+        const expectedResult = [
+            "```typescript",
+            "function sum(a: number, b: number): number {",
+            "   return a + b;",
+            "}",
+            "```"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
     });
 });
