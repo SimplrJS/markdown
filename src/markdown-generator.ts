@@ -50,15 +50,28 @@ export class MarkdownGenerator {
         ];
     }
 
-    public static blockquote(text: string): string[] {
+    public static blockquote(text: string | string[]): string[] {
+        let textLines: string[] = [];
+
+        if (typeof text === "string") {
+            textLines = S(text).trim().lines();
+        } else {
+            textLines = text;
+        }
+
         const lines: string[] = [];
 
-        S(text).lines().forEach(x => {
+        textLines.forEach(x => {
             if (x === "") {
                 lines.push(">");
                 return;
             }
-            const sanitizedText = S(x).trim().s;
+            /**
+             * Trimming only right.
+             * Because other markdown elements could have on the left side of the text spacing,
+             * for example: Lists.
+             */
+            const sanitizedText = S(x).trimRight().s;
             lines.push(`> ${sanitizedText}`);
         });
 

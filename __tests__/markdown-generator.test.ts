@@ -2,6 +2,8 @@ import { MarkdownGenerator } from "../src/markdown-generator";
 import { TableHeader } from "../src/contracts";
 import * as S from "string";
 
+const NEW_LINE = "\n";
+
 describe("Header", () => {
     it("Throw error when number is not finite", () => {
         expect(() => MarkdownGenerator.header("Some text", "a" as any)).toThrow();
@@ -49,7 +51,7 @@ describe("Blockquotes", () => {
     });
 
     it("Multiline working example", () => {
-        const text = "Some text \n\n Other Text";
+        const text = "Some text \n\nOther Text";
         const result = MarkdownGenerator.blockquote(text);
 
         const expectedResult = [
@@ -64,9 +66,58 @@ describe("Blockquotes", () => {
     });
 
     /**
-     * TODO: "Blockquotes can contain other Markdown elements, including headers, lists, and code blocks"
      * @see https://daringfireball.net/projects/markdown/syntax#blockquote
      */
+    it("contains other Markdown elements, including headers, lists, and code blocks", () => {
+        let text: string = "";
+        const list = [
+            "One",
+            "Two",
+            "Three",
+            [
+                "Three One",
+                "Three Two",
+                [
+                    "Three Two One"
+                ]
+            ]
+        ];
+
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number"]
+        ];
+
+        text += MarkdownGenerator.table(headers, rows).join(NEW_LINE);
+        text += NEW_LINE;
+        text += NEW_LINE;
+        text += MarkdownGenerator.orderedList(list).join(NEW_LINE);
+        text += NEW_LINE;
+        text += NEW_LINE;
+        text += "Hello world";
+
+        const result = MarkdownGenerator.blockquote(text);
+        const expectedResult = [
+            "> | Property | Value  |",
+            "> | -------- | ------ |",
+            "> | Name     | string |",
+            "> | Age      | number |",
+            ">",
+            "> 1. One",
+            "> 2. Two",
+            "> 3. Three",
+            ">     1. Three One",
+            ">     2. Three Two",
+            ">         1. Three Two One",
+            ">",
+            "> Hello world"
+        ];
+
+        expectedResult.forEach((x, index) => {
+            expect(result[index]).toBe(x);
+        });
+    });
 });
 
 describe("Emphasis", () => {

@@ -9,7 +9,7 @@ export class ListGenerator {
         list.forEach((x, index) => {
             // Handle if it's a string
             if (typeof x === "string") {
-                // Order can be "*" or "1."
+                // listSymbol can be "*" or "1."
                 let listSymbol: string;
                 if (!ordered && symbol != null) {
                     listSymbol = symbol;
