@@ -45,7 +45,7 @@ const builder = new MarkdownBuilder()
     .Text(md => `Hello ${md.Bold("World")}!`)
     .Text("It's so easy to print markdown this way!");
 
-fs.writeFile("./text.md", builder.GetOutput().join("\n"));
+fs.writeFile("./text.md", builder.Build());
 ```
 
 You can use `MarkdownGenerator` directly.

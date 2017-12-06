@@ -155,6 +155,10 @@ export class MarkdownBuilder {
     public GetOutput(): string[] {
         return this.output;
     }
+
+    public Build(eol = "\n"): string {
+        return this.output.join(eol);
+    }
 }
 
 new MarkdownBuilder()
