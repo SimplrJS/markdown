@@ -14,6 +14,13 @@
     "prepublishOnly": "npm run build && rimraf dist/debug.*"
   },
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimplrJS/markdown.git"
+  },
+  "contributors": [
+    "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)"
+  ],
   "dependencies": {
     "@types/string": "0.0.29",
     "string": "^3.3.3"
