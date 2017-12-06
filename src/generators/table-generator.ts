@@ -11,7 +11,7 @@ export class TableGenerator {
     public static renderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
         let lines: string[] = [];
         const columnsWidths: number[] = [];
-        const removeColumnIfEmpty = options != null && options.removeColummIfEmpty;
+        const removeColumnIfEmpty = options != null && options.removeColumnIfEmpty;
 
         // Calculate maxWidths of columns
         headers.forEach((header, headerIndex) => {
