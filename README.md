@@ -1,20 +1,8 @@
-<p align="left">
-    <a href="https://www.npmjs.com/package/@simplrjs/markdown">
-        <img src="https://img.shields.io/npm/v/@simplrjs/markdown.svg?style=flat-square" alt="version" />
-    </a>
-    <a href="https://travis-ci.org/SimplrJS/markdown">
-        <img src="https://img.shields.io/travis/SimplrJS/markdown.svg?style=flat-square" alt="build" />
-    </a>
-    <a href="https://david-dm.org/simplrjs/markdown">
-        <img src="https://img.shields.io/david/SimplrJS/markdown.svg?style=flat-square" alt="dependencies" />
-    </a>
-    <a href="https://david-dm.org/simplrjs/markdown?type=dev">
-        <img src="https://img.shields.io/david/dev/SimplrJS/markdown.svg?style=flat-square" alt="devDependencies" />
-    </a>
-    <a href="https://coveralls.io/github/SimplrJS/markdown">
-        <img src="https://img.shields.io/coveralls/github/simplrjs/markdown.svg?style=flat-square" alt="license" />
-    </a>
-</p>
+[![NPM version](https://img.shields.io/npm/v/@simplrjs/markdown.svg?style=flat-square)](https://www.npmjs.com/package/@simplrjs/markdown)
+[![Build](https://img.shields.io/travis/SimplrJS/markdown.svg?style=flat-square)](https://travis-ci.org/SimplrJS/markdown)
+[![Coveralls](https://img.shields.io/coveralls/github/SimplrJS/markdown.svg?style=flat-square)](https://coveralls.io/github/SimplrJS/markdown)
+[![Dependencies](https://img.shields.io/david/SimplrJS/markdown.svg?style=flat-square)](https://david-dm.org/simplrjs/markdown)
+[![Dev Dependencies](https://img.shields.io/david/dev/SimplrJS/markdown.svg?style=flat-square)](https://david-dm.org/simplrjs/markdown?type=dev)
 
 <h1 align="center">@simplrjs/markdown</h1>
 
