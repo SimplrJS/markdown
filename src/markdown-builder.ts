@@ -132,7 +132,7 @@ export class MarkdownBuilder {
         return this;
     }
 
-    public NewLine(): this {
+    public EmptyLine(): this {
         this.output.push("");
 
         return this;
