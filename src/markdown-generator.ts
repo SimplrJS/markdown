@@ -42,7 +42,12 @@ export namespace MarkdownGenerator {
         }
 
         const sanitizedText = S(text).trim().s;
-        const header = headerLevel === 1 ? S("=").repeat(sanitizedText.length).s : S("-").repeat(sanitizedText.length).s;
+        let header: string;
+        if (headerLevel === 1) {
+            header = S("=").repeat(sanitizedText.length).s;
+        } else {
+            header = S("-").repeat(sanitizedText.length).s;
+        }
 
         return [
             sanitizedText,
@@ -79,8 +84,8 @@ export namespace MarkdownGenerator {
     }
 
     export function Link(text: string, definitionName: string, definition: boolean): string;
-    export function Link(text: string, url: string, linkTitle ?: string): string;
-    export function Link(text: string, target: string, arg ?: string | boolean): string {
+    export function Link(text: string, url: string, linkTitle?: string): string;
+    export function Link(text: string, target: string, arg?: string | boolean): string {
         const sanitizedText = S(text).trim().s;
 
         // Link to a link definition
@@ -98,7 +103,7 @@ export namespace MarkdownGenerator {
         return `[${sanitizedText}](${targetText})`;
     }
 
-    export function LinkDefinition(text: string, url: string, linkTitle ?: string): string {
+    export function LinkDefinition(text: string, url: string, linkTitle?: string): string {
         const sanitizedText = S(text).trim().s;
         let linkTitleText = "";
 
@@ -109,11 +114,11 @@ export namespace MarkdownGenerator {
         return S(`[${sanitizedText}]: ${url} ${linkTitleText}`).trim().s;
     }
 
-    export function Image(altText: string, url: string, title ?: string): string {
+    export function Image(altText: string, url: string, title?: string): string {
         return "!" + Link(altText, url, title);
     }
 
-    export function UnorderedList(list: MarkdownList, options ?: UnorderedListOptions): string[] {
+    export function UnorderedList(list: MarkdownList, options?: UnorderedListOptions): string[] {
         const allowedSymbols: UnorderedListSymbols[] = [
             "*",
             "+",
@@ -136,7 +141,7 @@ export namespace MarkdownGenerator {
         return ListGenerator.RenderList(list, 0, true);
     }
 
-    export function HorizontalRule(symbol ?: HorizontalRuleSymbol, length ?: number): string {
+    export function HorizontalRule(symbol?: HorizontalRuleSymbol, length?: number): string {
         const allowedSymbols: HorizontalRuleSymbol[] = [
             "*",
             "-",
@@ -159,7 +164,7 @@ export namespace MarkdownGenerator {
         return S(currentSymbol).pad(currentLength, currentSymbol).s;
     }
 
-    export function Italic(text: string, options ?: EmphasisOptions): string {
+    export function Italic(text: string, options?: EmphasisOptions): string {
         const sanitizedText = S(text).trim().s;
 
         if (options != null && options.useUnderscores) {
@@ -169,7 +174,7 @@ export namespace MarkdownGenerator {
         return `*${sanitizedText}*`;
     }
 
-    export function Bold(text: string, options ?: EmphasisOptions): string {
+    export function Bold(text: string, options?: EmphasisOptions): string {
         const sanitizedText = S(text).trim().s;
 
         if (options != null && options.useUnderscores) {
@@ -199,7 +204,7 @@ export namespace MarkdownGenerator {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    export function Code(text: string | string[], options ?: CodeOptions): string[] {
+    export function Code(text: string | string[], options?: CodeOptions): string[] {
         let sanitizedText: string[] = [];
 
         if (typeof text === "string") {
@@ -222,7 +227,7 @@ export namespace MarkdownGenerator {
         ];
     }
 
-    export function Table(headers: string[] | TableHeader[], content: string[][], options ?: TableOptions): string[] {
+    export function Table(headers: string[] | TableHeader[], content: string[][], options?: TableOptions): string[] {
         return TableGenerator.RenderTable(headers, content, options);
     }
 
@@ -230,7 +235,7 @@ export namespace MarkdownGenerator {
      * Escapes string.
      * @see https://daringfireball.net/projects/markdown/syntax#backslash
      */
-    export function escapeString(text: string): string {
+    export function EscapeString(text: string): string {
         return text.replace(/[\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!]/g, "\\$&");
     }
 }

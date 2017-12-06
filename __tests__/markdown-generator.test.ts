@@ -40,6 +40,12 @@ describe("Underline header", () => {
         const result = MarkdownGenerator.UnderlineHeader(text, 1);
         expect(result).toMatchSnapshot();
     });
+
+    it("Working example 2", () => {
+        const text = "Some text";
+        const result = MarkdownGenerator.UnderlineHeader(text, 2);
+        expect(result).toMatchSnapshot();
+    });
 });
 
 describe("BlockQuotes", () => {
@@ -51,6 +57,16 @@ describe("BlockQuotes", () => {
 
     it("Multiline working example", () => {
         const text = "Some text \n\nOther Text";
+        const result = MarkdownGenerator.Blockquote(text);
+
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Multiline string array working example", () => {
+        const text = [
+            "Some text",
+            "Other text"
+        ];
         const result = MarkdownGenerator.Blockquote(text);
 
         expect(result).toMatchSnapshot();
@@ -138,6 +154,12 @@ describe("Code", () => {
             "   return a + b;",
             "}"
         ];
+        const result = MarkdownGenerator.Code(codeExample);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("block with text without language option", () => {
+        const codeExample = "function sum(a: number, b: number): number {\n   return a + b;\n}";
         const result = MarkdownGenerator.Code(codeExample);
         expect(result).toMatchSnapshot();
     });
@@ -318,4 +340,10 @@ describe("Horizontal rule", () => {
     it("Throws when symbol is not in allowed list.", () => {
         expect(() => MarkdownGenerator.HorizontalRule("1" as any)).toThrow();
     });
+});
+
+it("Escape string", () => {
+    const textToEscape = MarkdownGenerator.Link("Google", "https://google.com/");
+    const result = MarkdownGenerator.EscapeString(textToEscape);
+    expect(result).toMatchSnapshot();
 });

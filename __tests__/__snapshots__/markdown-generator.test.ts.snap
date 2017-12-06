@@ -18,6 +18,13 @@ Array [
 ]
 `;
 
+exports[`BlockQuotes Multiline string array working example 1`] = `
+Array [
+  "> Some text",
+  "> Other text",
+]
+`;
+
 exports[`BlockQuotes Multiline working example 1`] = `
 Array [
   "> Some text",
@@ -52,6 +59,16 @@ Array [
 ]
 `;
 
+exports[`Code block with text without language option 1`] = `
+Array [
+  "\`\`\`",
+  "function sum(a: number, b: number): number {",
+  "   return a + b;",
+  "}",
+  "\`\`\`",
+]
+`;
+
 exports[`Code inline 1`] = `"\`git status\`"`;
 
 exports[`Emphasis StrikeThrough 1`] = `"~~Some text~~"`;
@@ -63,6 +80,8 @@ exports[`Emphasis bold using underscores 1`] = `"__Some text__"`;
 exports[`Emphasis italic using asterisks 1`] = `"*Some text*"`;
 
 exports[`Emphasis italic using underscores 1`] = `"_Some text_"`;
+
+exports[`Escape string 1`] = `"\\\\[Google\\\\]\\\\(https://google\\\\.com/\\\\)"`;
 
 exports[`Header Working example 1`] = `"# Some text"`;
 
@@ -156,5 +175,12 @@ exports[`Underline header Working example 1`] = `
 Array [
   "Some text",
   "=========",
+]
+`;
+
+exports[`Underline header Working example 2 1`] = `
+Array [
+  "Some text",
+  "---------",
 ]
 `;
