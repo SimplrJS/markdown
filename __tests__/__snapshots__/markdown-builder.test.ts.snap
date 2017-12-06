@@ -56,7 +56,19 @@ MarkdownBuilder {
 }
 `;
 
-exports[`MarkdownBuilder Simple builder 1`] = `
+exports[`MarkdownBuilder Simple builder with Build 1`] = `
+"# Builder simple example
+
+It's a simple markdown builder example."
+`;
+
+exports[`MarkdownBuilder Simple builder with Build 2`] = `
+"# Builder simple example
+
+It's a simple markdown builder example."
+`;
+
+exports[`MarkdownBuilder Simple builder with GetOutput 1`] = `
 Array [
   "# Builder simple example",
   "",

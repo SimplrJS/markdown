@@ -1,13 +1,23 @@
 import { MarkdownBuilder } from "../src/markdown-builder";
 
 describe("MarkdownBuilder", () => {
-    it("Simple builder", () => {
+    it("Simple builder with GetOutput", () => {
         const builder = new MarkdownBuilder()
             .Header("Builder simple example", 1)
             .EmptyLine()
             .Text("It's a simple markdown builder example.");
 
         expect(builder.GetOutput()).toMatchSnapshot();
+    });
+
+    it("Simple builder with Build", () => {
+        const builder = new MarkdownBuilder()
+            .Header("Builder simple example", 1)
+            .EmptyLine()
+            .Text("It's a simple markdown builder example.");
+
+        expect(builder.Build()).toMatchSnapshot();
+        expect(builder.Build("\n")).toMatchSnapshot();
     });
 
     it("All used methods", () => {
