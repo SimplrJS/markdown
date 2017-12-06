@@ -160,6 +160,3 @@ export class MarkdownBuilder {
         return this.output.join(eol);
     }
 }
-
-new MarkdownBuilder()
-    .Text(md => md.Bold("Hello"));
