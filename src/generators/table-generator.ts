@@ -5,6 +5,7 @@ import {
     TableOptions,
     TableAlign
 } from "../contracts";
+import { Helpers } from "../utils/helpers";
 
 export namespace TableGenerator {
     export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
@@ -17,7 +18,7 @@ export namespace TableGenerator {
             const rows = content.map<string>(x => {
                 // Fill missing columns.
                 if (x.length < headers.length) {
-                    x = FillArray(x, headers.length);
+                    x = Helpers.FillArray(x, headers.length);
                 }
 
                 return x[headerIndex];
@@ -146,20 +147,5 @@ export namespace TableGenerator {
         }
 
         return maxWidth;
-    }
-
-    export function FillArray(arr: string[], length: number): string[] {
-        const result = [...arr];
-
-        const count = length - arr.length;
-        if (count > 0) {
-            for (let i = 0; i < count; i++) {
-                result.push("");
-            }
-
-            return result;
-        } else {
-            return arr;
-        }
     }
 }
