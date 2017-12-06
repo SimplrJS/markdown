@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MarkdownBuilder All used methods 1`] = `
+Array [
+  "Foo",
+  "===",
+  "",
+  "## Bar ##",
+  "blockquote",
+  "",
+  "[Link Text][reference-text]",
+  "",
+  "[Link Url](https://domain.domain \\"qwd\\")",
+  "",
+  "[reference]: https://domain.domain",
+  "",
+  "![Alternative text](https://domain.domain)",
+  "",
+  "* One",
+  "* Two",
+  "",
+  "1. One",
+  "2. Two",
+  "",
+  "---",
+  "",
+  "*Italic*",
+  "",
+  "**Bold**",
+  "",
+  "~~Strike Through~~",
+  "",
+  "\`Inline code\`",
+  "",
+  "\`\`\`typescript",
+  "const a = \\"Hello World!\\";",
+  "\`\`\`",
+  "",
+  "| A  | B  |",
+  "| -- | -- |",
+  "| a1 | b1 |",
+  "",
+  "Hello World!",
+  "It's a simple markdown builder example.",
+]
+`;
+
+exports[`MarkdownBuilder Append another Builder while constructing a new one 1`] = `
+MarkdownBuilder {
+  "output": Array [
+    "Hello Header",
+    "============",
+    "",
+    "Hello **World**!",
+  ],
+}
+`;
+
+exports[`MarkdownBuilder Simple builder with Build 1`] = `
+"# Builder simple example
+
+It's a simple markdown builder example."
+`;
+
+exports[`MarkdownBuilder Simple builder with Build 2`] = `
+"# Builder simple example
+
+It's a simple markdown builder example."
+`;
+
+exports[`MarkdownBuilder Simple builder with GetOutput 1`] = `
+Array [
+  "# Builder simple example",
+  "",
+  "It's a simple markdown builder example.",
+]
+`;

@@ -5,15 +5,14 @@
         "removeComments": false,
         "outDir": "dist",
         "rootDir": "src",
-        "sourceMap": false,
+        "sourceMap": true,
         "skipDefaultLibCheck": true,
         "declaration": true,
         "pretty": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [
-            "es5",
-            "es2015.promise",
+            "es6",
             "dom"
         ],
         "typeRoots": [
