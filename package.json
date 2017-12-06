@@ -5,10 +5,13 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "coveralls": "coveralls < coverage/lcov.info",
     "test": "jest",
+    "test-ci": "jest --maxWorkers=4",
     "tslint": "tslint --project . --config ./tslint.json",
     "test-watch": "jest --watchAll",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "prepublishOnly": "npm run build"
   },
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "dependencies": {
@@ -18,6 +21,7 @@
   "devDependencies": {
     "@types/jest": "^20.0.5",
     "@types/sinon": "^2.3.3",
+    "coveralls": "^3.0.0",
     "jest": "^20.0.4",
     "sinon": "^2.4.1",
     "ts-jest": "^20.0.7",
@@ -32,10 +36,16 @@
     "!*.config.js"
   ],
   "jest": {
+    "collectCoverage": true,
+    "mapCoverage": true,
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
