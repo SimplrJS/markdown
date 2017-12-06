@@ -129,11 +129,11 @@ export namespace MarkdownGenerator {
             symbol = options.symbol;
         }
 
-        return ListGenerator.renderList(list, 0, false, symbol);
+        return ListGenerator.RenderList(list, 0, false, symbol);
     }
 
     export function OrderedList(list: MarkdownList): string[] {
-        return ListGenerator.renderList(list, 0, true);
+        return ListGenerator.RenderList(list, 0, true);
     }
 
     export function HorizontalRule(symbol ?: HorizontalRuleSymbol, length ?: number): string {
@@ -223,7 +223,7 @@ export namespace MarkdownGenerator {
     }
 
     export function Table(headers: string[] | TableHeader[], content: string[][], options ?: TableOptions): string[] {
-        return TableGenerator.renderTable(headers, content, options);
+        return TableGenerator.RenderTable(headers, content, options);
     }
 
     /**
