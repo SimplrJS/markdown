@@ -14,7 +14,7 @@ export namespace TableGenerator {
 
         let filledRows = content.map(row => {
             if (row.length < headers.length) {
-                return Helpers.FillArray(row, headers.length);
+                return Helpers.FillArray(row, headers.length, "");
             } else {
                 return row;
             }
