@@ -153,6 +153,15 @@ Array [
 ]
 `;
 
+exports[`Table Headers with all alignments 1`] = `
+Array [
+  "| Text1 | Text2 | Text3 | Text4 |",
+  "| :---: | :---- | ----- | ----: |",
+  "| One   | Two   | Three | Four  |",
+  "| One   | Two   | Three | Four  |",
+]
+`;
+
 exports[`Table Removes a column if it's empty 1`] = `
 Array [
   "| Property |",
@@ -166,6 +175,15 @@ exports[`Table Simple example 1`] = `
 Array [
   "| Property | Value  |",
   "| -------- | ------ |",
+  "| Name     | string |",
+  "| Age      | number |",
+]
+`;
+
+exports[`Table Simple example with mixed alignments 1`] = `
+Array [
+  "| Property | Value  |",
+  "| :------: | ------ |",
   "| Name     | string |",
   "| Age      | number |",
 ]

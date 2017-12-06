@@ -67,7 +67,7 @@ export namespace TableGenerator {
                 }
                 case "center":
                     // :---:
-                    columnAlignText = S(":").padLeft(columnWidth, "-").s;
+                    columnAlignText = S(":").padRight(columnWidth, "-").s;
                     columnAlignText = columnAlignText.slice(0, -1) + ":";
                     break;
                 case "none":

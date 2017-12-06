@@ -275,7 +275,50 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    // TODO: Add more tests.
+    it("Simple example with mixed alignments", () => {
+        const headers: Array<TableHeader | string> = [
+            {
+                text: "Property",
+                align: "center"
+            },
+            "Value"
+        ];
+
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Headers with all alignments", () => {
+        const headers: TableHeader[] = [
+            {
+                text: "Text1",
+                align: "center"
+            },
+            {
+                text: "Text2",
+                align: "left"
+            },
+            {
+                text: "Text3",
+                align: "none"
+            },
+            {
+                text: "Text4",
+                align: "right"
+            }
+        ];
+
+        const rows = [
+            ["One", "Two", "Three", "Four"],
+            ["One", "Two", "Three", "Four"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
+    });
 });
 
 describe("Links", () => {
