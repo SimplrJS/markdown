@@ -162,6 +162,16 @@ Array [
 ]
 `;
 
+exports[`Table Headers with missing data in rows 1`] = `
+Array [
+  "| Text1 | Text2 | Text3 |",
+  "| :---: | :---- | ----- |",
+  "| One   | Two   | Three |",
+  "| One   |       |       |",
+  "| One   | Two   |       |",
+]
+`;
+
 exports[`Table Removes a column if it's empty 1`] = `
 Array [
   "| Property |",

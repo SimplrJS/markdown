@@ -319,6 +319,35 @@ describe("Table", () => {
         const result = MarkdownGenerator.Table(headers, rows);
         expect(result).toMatchSnapshot();
     });
+
+    it("Headers with missing data in rows", () => {
+        const headers: TableHeader[] = [
+            {
+                text: "Text1",
+                align: "center"
+            },
+            {
+                text: "Text2",
+                align: "left"
+            },
+            {
+                text: "Text3",
+                align: "none"
+            },
+            {
+                text: "Text4",
+                align: "right"
+            }
+        ];
+
+        const rows = [
+            ["One", "Two", "Three"],
+            ["One"],
+            ["One", "Two"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
+        expect(result).toMatchSnapshot();
+    });
 });
 
 describe("Links", () => {

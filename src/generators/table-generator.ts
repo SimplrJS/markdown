@@ -9,36 +9,40 @@ import { Helpers } from "../utils/helpers";
 
 export namespace TableGenerator {
     export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
-        let lines: string[] = [];
         const columnsWidths: number[] = [];
         const removeColumnIfEmpty = options != null && options.removeColumnIfEmpty;
 
-        // Calculate maxWidths of columns
-        headers.forEach((header, headerIndex) => {
-            const rows = content.map<string>(x => {
-                // Fill missing columns.
-                if (x.length < headers.length) {
-                    x = Helpers.FillArray(x, headers.length);
-                }
-
-                return x[headerIndex];
-            });
-            columnsWidths[headerIndex] = GetMaxColumnWidth(GetHeaderText(header), rows, removeColumnIfEmpty);
-
-            if (removeColumnIfEmpty && columnsWidths[headerIndex] === 0) {
-                // Remove columns if they are empty
-                headers.splice(headerIndex, 1);
-
-                content
-                    .filter(x => x[headerIndex] != null)
-                    .forEach(x => x.splice(headerIndex, 1));
+        let filledRows = content.map(row => {
+            if (row.length < headers.length) {
+                return Helpers.FillArray(row, headers.length);
+            } else {
+                return row;
             }
         });
 
-        // Header
-        lines = lines.concat(RenderTableHeader(headers, columnsWidths));
-        // Contents
-        lines = lines.concat(RenderTableContents(content, columnsWidths));
+        const finalHeaders = headers
+            .map((header, headerIndex) => {
+                const rows = filledRows.map(x => x[headerIndex]);
+                columnsWidths[headerIndex] = GetMaxColumnWidth(GetHeaderText(header), rows, removeColumnIfEmpty);
+
+                if (removeColumnIfEmpty && columnsWidths[headerIndex] === 0) {
+                    filledRows = filledRows
+                        .filter(x => x[headerIndex] != null)
+                        .map(x => x.splice(0, headerIndex));
+
+                    return null;
+                }
+
+                return header;
+            })
+            .filter(x => x != null) as Array<string | TableHeader>;
+
+        const lines = [
+            // Header
+            ...RenderTableHeader(finalHeaders, columnsWidths),
+            // Content
+            ...RenderTableContents(filledRows, columnsWidths)
+        ];
 
         return lines;
     }
