@@ -6,7 +6,6 @@ import {
     TableAlign
 } from "../contracts";
 
-// TODO: Make real column content alignments.
 export namespace TableGenerator {
     export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
         let lines: string[] = [];
@@ -18,7 +17,7 @@ export namespace TableGenerator {
             const rows = content.map<string>(x => {
                 // Fill missing columns.
                 if (x.length < headers.length) {
-                    FillArray(x, headers.length);
+                    x = FillArray(x, headers.length);
                 }
 
                 return x[headerIndex];
@@ -29,11 +28,9 @@ export namespace TableGenerator {
                 // Remove columns if they are empty
                 headers.splice(headerIndex, 1);
 
-                content.forEach(row => {
-                    if (row[headerIndex] != null) {
-                        row.splice(headerIndex, 1);
-                    }
-                });
+                content
+                    .filter(x => x[headerIndex] != null)
+                    .forEach(x => x.splice(headerIndex, 1));
             }
         });
 
@@ -68,9 +65,11 @@ export namespace TableGenerator {
                     columnAlignText = S(":").padLeft(columnWidth, "-").s;
                     break;
                 }
-                // TODO: Implement center.
-                // :---:
                 case "center":
+                    // :---:
+                    columnAlignText = S(":").padLeft(columnWidth, "-").s;
+                    columnAlignText = columnAlignText.slice(0, -1) + ":";
+                    break;
                 case "none":
                 default: {
                     columnAlignText = S("-").repeat(columnWidth).s;
@@ -149,12 +148,18 @@ export namespace TableGenerator {
         return maxWidth;
     }
 
-    export function FillArray(arr: string[], length: number): void {
+    export function FillArray(arr: string[], length: number): string[] {
+        const result = [...arr];
+
         const count = length - arr.length;
         if (count > 0) {
             for (let i = 0; i < count; i++) {
-                arr.push("");
+                result.push("");
             }
+
+            return result;
+        } else {
+            return arr;
         }
     }
 }
