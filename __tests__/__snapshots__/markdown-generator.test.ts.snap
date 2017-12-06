@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockQuotes Contains other Markdown elements, including headers, lists, and code blocks 1`] = `
+Array [
+  "> | Property | Value  |",
+  "> | -------- | ------ |",
+  "> | Name     | string |",
+  "> | Age      | number |",
+  ">",
+  "> 1. One",
+  "> 2. Two",
+  "> 3. Three",
+  ">     1. Three One",
+  ">     2. Three Two",
+  ">         1. Three Two One",
+  ">",
+  "> Hello world",
+]
+`;
+
+exports[`BlockQuotes Multiline working example 1`] = `
+Array [
+  "> Some text",
+  ">",
+  "> Other Text",
+]
+`;
+
+exports[`BlockQuotes Simple working example 1`] = `
+Array [
+  "> Some text",
+]
+`;
+
+exports[`Code block with array of text with language option 1`] = `
+Array [
+  "\`\`\`typescript",
+  "function sum(a: number, b: number): number {",
+  "   return a + b;",
+  "}",
+  "\`\`\`",
+]
+`;
+
+exports[`Code block with array of text without language option 1`] = `
+Array [
+  "\`\`\`",
+  "function sum(a: number, b: number): number {",
+  "   return a + b;",
+  "}",
+  "\`\`\`",
+]
+`;
+
+exports[`Code inline 1`] = `"\`git status\`"`;
+
+exports[`Emphasis StrikeThrough 1`] = `"~~Some text~~"`;
+
+exports[`Emphasis bold using asterisks 1`] = `"**Some text**"`;
+
+exports[`Emphasis bold using underscores 1`] = `"__Some text__"`;
+
+exports[`Emphasis italic using asterisks 1`] = `"*Some text*"`;
+
+exports[`Emphasis italic using underscores 1`] = `"_Some text_"`;
+
+exports[`Header Working example 1`] = `"# Some text"`;
+
+exports[`Header Working example with closing header 1`] = `"# Some text #"`;
+
+exports[`Horizontal rule Custom length 1`] = `"----------"`;
+
+exports[`Horizontal rule Custom symbol 1`] = `"***"`;
+
+exports[`Horizontal rule Simple horizontal rule 1`] = `"---"`;
+
+exports[`Image Simple image 1`] = `"![Alt text](https://path.com/image.jpg)"`;
+
+exports[`Image Simple image with a hover text 1`] = `"![Alt text](https://google.com/ \\"Hover text\\")"`;
+
+exports[`Links Link definition 1`] = `"[Some text]: https://google.com/"`;
+
+exports[`Links Link definition with a hover text 1`] = `"[Some text]: https://google.com/ \\"Hover text\\""`;
+
+exports[`Links Link to definition 1`] = `"[Some text][Google]"`;
+
+exports[`Links Simple link 1`] = `"[Some text](https://google.com/)"`;
+
+exports[`Links Simple link with a hover text 1`] = `"[Some text](https://google.com/ \\"Hover text\\")"`;
+
+exports[`Lists Ordered deep list 1`] = `
+Array [
+  "1. One",
+  "2. Two",
+  "3. Three",
+  "    1. Three One",
+  "    2. Three Two",
+  "        1. Three Two One",
+]
+`;
+
+exports[`Lists Ordered simple list 1`] = `
+Array [
+  "1. One",
+  "2. Two",
+  "3. Three",
+]
+`;
+
+exports[`Lists Unordered deep list 1`] = `
+Array [
+  "* One",
+  "* Two",
+  "* Three",
+  "    * Three One",
+  "    * Three Two",
+  "        * Three Two One",
+]
+`;
+
+exports[`Lists Unordered simple list 1`] = `
+Array [
+  "* One",
+  "* Two",
+  "* Three",
+]
+`;
+
+exports[`Lists Unordered simple list with a custom symbol 1`] = `
+Array [
+  "- One",
+  "- Two",
+  "- Three",
+]
+`;
+
+exports[`Table Removes a column if it's empty 1`] = `
+Array [
+  "| Property |",
+  "| -------- |",
+  "| Name     |",
+  "| Age      |",
+]
+`;
+
+exports[`Table Simple example 1`] = `
+Array [
+  "| Property | Value  |",
+  "| -------- | ------ |",
+  "| Name     | string |",
+  "| Age      | number |",
+]
+`;
+
+exports[`Underline header Working example 1`] = `
+Array [
+  "Some text",
+  "=========",
+]
+`;
