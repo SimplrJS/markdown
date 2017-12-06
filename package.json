@@ -44,7 +44,7 @@
     "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/tests/"
+      "/__tests__/"
     ],
     "moduleFileExtensions": [
       "ts",
