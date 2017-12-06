@@ -6,69 +6,76 @@ const NEW_LINE = "\n";
 
 describe("Header", () => {
     it("Throw error when number is not finite", () => {
-        expect(() => MarkdownGenerator.header("Some text", "a" as any)).toThrow();
+        expect(() => MarkdownGenerator.Header("Some text", "a" as any)).toThrow();
     });
 
     it("Throw error when number is not valid (0 < x < 7)", () => {
-        expect(() => MarkdownGenerator.header("Some text", 7)).toThrow();
+        expect(() => MarkdownGenerator.Header("Some text", 7)).toThrow();
     });
 
     it("Working example", () => {
         const text = "Some text";
-        const result = MarkdownGenerator.header("Some text", 1);
-        expect(result).toBe(`# ${text}`);
+        const result = MarkdownGenerator.Header("Some text", 1);
+        expect(result).toMatchSnapshot();
     });
 
     it("Working example with closing header", () => {
         const text = "Some text";
-        const result = MarkdownGenerator.header(text, 1, true);
-        expect(result).toBe(`# ${text} #`);
+        const result = MarkdownGenerator.Header(text, 1, true);
+        expect(result).toMatchSnapshot();
     });
 });
 
 describe("Underline header", () => {
     it("Throw error when number is not finite", () => {
-        expect(() => MarkdownGenerator.underlineHeader("Some text", "a" as any)).toThrow();
+        expect(() => MarkdownGenerator.UnderlineHeader("Some text", "a" as any)).toThrow();
     });
 
     it("Throw error when number is not valid (0 < x < 3)", () => {
-        expect(() => MarkdownGenerator.underlineHeader("Some text", 3)).toThrow();
+        expect(() => MarkdownGenerator.UnderlineHeader("Some text", 3)).toThrow();
     });
 
     it("Working example", () => {
         const text = "Some text";
-        const result = MarkdownGenerator.underlineHeader(text, 1);
-        expect(result[0]).toBe(text);
-        expect(result[1]).toBe(S("=").repeat(text.length).s);
+        const result = MarkdownGenerator.UnderlineHeader(text, 1);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Working example 2", () => {
+        const text = "Some text";
+        const result = MarkdownGenerator.UnderlineHeader(text, 2);
+        expect(result).toMatchSnapshot();
     });
 });
 
-describe("Blockquotes", () => {
+describe("BlockQuotes", () => {
     it("Simple working example", () => {
         const text = "Some text";
-        const result = MarkdownGenerator.blockquote(text);
-        expect(result[0]).toBe(`> ${text}`);
+        const result = MarkdownGenerator.Blockquote(text);
+        expect(result).toMatchSnapshot();
     });
 
     it("Multiline working example", () => {
         const text = "Some text \n\nOther Text";
-        const result = MarkdownGenerator.blockquote(text);
+        const result = MarkdownGenerator.Blockquote(text);
 
-        const expectedResult = [
-            "> Some text",
-            ">",
-            "> Other Text"
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Multiline string array working example", () => {
+        const text = [
+            "Some text",
+            "Other text"
         ];
+        const result = MarkdownGenerator.Blockquote(text);
 
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        expect(result).toMatchSnapshot();
     });
 
     /**
      * @see https://daringfireball.net/projects/markdown/syntax#blockquote
      */
-    it("contains other Markdown elements, including headers, lists, and code blocks", () => {
+    it("Contains other Markdown elements, including headers, lists, and code blocks", () => {
         let text: string = "";
         const list = [
             "One",
@@ -89,74 +96,56 @@ describe("Blockquotes", () => {
             ["Age", "number"]
         ];
 
-        text += MarkdownGenerator.table(headers, rows).join(NEW_LINE);
+        text += MarkdownGenerator.Table(headers, rows).join(NEW_LINE);
         text += NEW_LINE;
         text += NEW_LINE;
-        text += MarkdownGenerator.orderedList(list).join(NEW_LINE);
+        text += MarkdownGenerator.OrderedList(list).join(NEW_LINE);
         text += NEW_LINE;
         text += NEW_LINE;
         text += "Hello world";
 
-        const result = MarkdownGenerator.blockquote(text);
-        const expectedResult = [
-            "> | Property | Value  |",
-            "> | -------- | ------ |",
-            "> | Name     | string |",
-            "> | Age      | number |",
-            ">",
-            "> 1. One",
-            "> 2. Two",
-            "> 3. Three",
-            ">     1. Three One",
-            ">     2. Three Two",
-            ">         1. Three Two One",
-            ">",
-            "> Hello world"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.Blockquote(text);
+        expect(result).toMatchSnapshot();
     });
 });
 
 describe("Emphasis", () => {
     it("italic using asterisks", () => {
         const text = "Some text  ";
-        const result = MarkdownGenerator.italic(text);
-        expect(result).toBe("*Some text*");
+        const result = MarkdownGenerator.Italic(text);
+        expect(result).toMatchSnapshot();
     });
 
     it("italic using underscores", () => {
         const text = "Some text  ";
-        const result = MarkdownGenerator.italic(text, { useUnderscores: true });
-        expect(result).toBe("_Some text_");
+        const result = MarkdownGenerator.Italic(text, { useUnderscores: true });
+        expect(result).toMatchSnapshot();
     });
 
     it("bold using asterisks", () => {
         const text = "Some text  ";
-        const result = MarkdownGenerator.bold(text);
-        expect(result).toBe(`**Some text**`);
+        const result = MarkdownGenerator.Bold(text);
+        expect(result).toMatchSnapshot();
     });
 
     it("bold using underscores", () => {
         const text = "Some text  ";
-        const result = MarkdownGenerator.bold(text, { useUnderscores: true });
-        expect(result).toBe("__Some text__");
+        const result = MarkdownGenerator.Bold(text, { useUnderscores: true });
+        expect(result).toMatchSnapshot();
     });
 
-    it("strikethrough", () => {
+    it("StrikeThrough", () => {
         const text = "Some text  ";
-        const result = MarkdownGenerator.strikethrough(text);
-        expect(result).toBe("~~Some text~~");
+        const result = MarkdownGenerator.StrikeThrough(text);
+        expect(result).toMatchSnapshot();
     });
 });
 
 describe("Code", () => {
     it("inline", () => {
         const text = "git status";
-        const result = MarkdownGenerator.inlineCode(text);
-        expect(result).toBe("`git status`");
+        const result = MarkdownGenerator.InlineCode(text);
+        expect(result).toMatchSnapshot();
     });
 
     it("block with array of text without language option", () => {
@@ -165,19 +154,14 @@ describe("Code", () => {
             "   return a + b;",
             "}"
         ];
-        const result = MarkdownGenerator.code(codeExample);
+        const result = MarkdownGenerator.Code(codeExample);
+        expect(result).toMatchSnapshot();
+    });
 
-        const expectedResult = [
-            "```",
-            "function sum(a: number, b: number): number {",
-            "   return a + b;",
-            "}",
-            "```"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+    it("block with text without language option", () => {
+        const codeExample = "function sum(a: number, b: number): number {\n   return a + b;\n}";
+        const result = MarkdownGenerator.Code(codeExample);
+        expect(result).toMatchSnapshot();
     });
 
     it("block with array of text with language option", () => {
@@ -186,19 +170,8 @@ describe("Code", () => {
             "   return a + b;",
             "}"
         ];
-        const result = MarkdownGenerator.code(codeExample, { lang: "typescript" });
-
-        const expectedResult = [
-            "```typescript",
-            "function sum(a: number, b: number): number {",
-            "   return a + b;",
-            "}",
-            "```"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.Code(codeExample, { lang: "typescript" });
+        expect(result).toMatchSnapshot();
     });
 });
 
@@ -210,16 +183,8 @@ describe("Lists", () => {
             "Three"
         ];
 
-        const result = MarkdownGenerator.unorderedList(list);
-        const expectedResult = [
-            "* One",
-            "* Two",
-            "* Three"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.UnorderedList(list);
+        expect(result).toMatchSnapshot();
     });
 
     it("Unordered deep list", () => {
@@ -236,19 +201,8 @@ describe("Lists", () => {
             ]
         ];
 
-        const result = MarkdownGenerator.unorderedList(list);
-        const expectedResult = [
-            "* One",
-            "* Two",
-            "* Three",
-            "    * Three One",
-            "    * Three Two",
-            "        * Three Two One",
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.UnorderedList(list);
+        expect(result).toMatchSnapshot();
     });
 
     it("Unordered simple list with a custom symbol", () => {
@@ -258,22 +212,14 @@ describe("Lists", () => {
             "Three"
         ];
 
-        const result = MarkdownGenerator.unorderedList(list, {
+        const result = MarkdownGenerator.UnorderedList(list, {
             symbol: "-"
         });
-        const expectedResult = [
-            "- One",
-            "- Two",
-            "- Three"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        expect(result).toMatchSnapshot();
     });
 
     it("UnorderedList should throw when given not supported symbol", () => {
-        expect(() => MarkdownGenerator.unorderedList([], {
+        expect(() => MarkdownGenerator.UnorderedList([], {
             symbol: "a" as any
         })).toThrow();
     });
@@ -285,16 +231,8 @@ describe("Lists", () => {
             "Three"
         ];
 
-        const result = MarkdownGenerator.orderedList(list);
-        const expectedResult = [
-            "1. One",
-            "2. Two",
-            "3. Three"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.OrderedList(list);
+        expect(result).toMatchSnapshot();
     });
 
     it("Ordered deep list", () => {
@@ -311,19 +249,8 @@ describe("Lists", () => {
             ]
         ];
 
-        const result = MarkdownGenerator.orderedList(list);
-        const expectedResult = [
-            "1. One",
-            "2. Two",
-            "3. Three",
-            "    1. Three One",
-            "    2. Three Two",
-            "        1. Three Two One",
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.OrderedList(list);
+        expect(result).toMatchSnapshot();
     });
 });
 
@@ -334,17 +261,8 @@ describe("Table", () => {
             ["Name", "string"],
             ["Age", "number"]
         ];
-        const result = MarkdownGenerator.table(headers, rows);
-        const expectedResult = [
-            "| Property | Value  |",
-            "| -------- | ------ |",
-            "| Name     | string |",
-            "| Age      | number |"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
     });
 
     it("Removes a column if it's empty", () => {
@@ -353,82 +271,151 @@ describe("Table", () => {
             ["Name"],
             ["Age"]
         ];
-        const result = MarkdownGenerator.table(headers, rows, { removeColummIfEmpty: true });
-        const expectedResult = [
-            "| Property |",
-            "| -------- |",
-            "| Name     |",
-            "| Age      |"
-        ];
-
-        expectedResult.forEach((x, index) => {
-            expect(result[index]).toBe(x);
-        });
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
+        expect(result).toMatchSnapshot();
     });
 
-    // TODO: Add more tests.
+    it("Simple example with mixed alignments", () => {
+        const headers: Array<TableHeader | string> = [
+            {
+                text: "Property",
+                align: "center"
+            },
+            "Value"
+        ];
+
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Headers with all alignments", () => {
+        const headers: TableHeader[] = [
+            {
+                text: "Text1",
+                align: "center"
+            },
+            {
+                text: "Text2",
+                align: "left"
+            },
+            {
+                text: "Text3",
+                align: "none"
+            },
+            {
+                text: "Text4",
+                align: "right"
+            }
+        ];
+
+        const rows = [
+            ["One", "Two", "Three", "Four"],
+            ["One", "Two", "Three", "Four"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Headers with missing data in rows", () => {
+        const headers: TableHeader[] = [
+            {
+                text: "Text1",
+                align: "center"
+            },
+            {
+                text: "Text2",
+                align: "left"
+            },
+            {
+                text: "Text3",
+                align: "none"
+            },
+            {
+                text: "Text4",
+                align: "right"
+            }
+        ];
+
+        const rows = [
+            ["One", "Two", "Three"],
+            ["One"],
+            ["One", "Two"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
+        expect(result).toMatchSnapshot();
+    });
 });
 
 describe("Links", () => {
     it("Simple link", () => {
-        const result = MarkdownGenerator.link("Some text", "https://google.com/");
-        expect(result).toBe("[Some text](https://google.com/)");
+        const result = MarkdownGenerator.Link("Some text", "https://google.com/");
+        expect(result).toMatchSnapshot();
     });
 
     it("Simple link with a hover text", () => {
-        const result = MarkdownGenerator.link("Some text", "https://google.com/", "Hover text");
-        expect(result).toBe("[Some text](https://google.com/ \"Hover text\")");
+        const result = MarkdownGenerator.Link("Some text", "https://google.com/", "Hover text");
+        expect(result).toMatchSnapshot();
     });
 
     it("Link to definition", () => {
-        const result = MarkdownGenerator.link("Some text", "Google", true);
-        expect(result).toBe("[Some text][Google]");
+        const result = MarkdownGenerator.Link("Some text", "Google", true);
+        expect(result).toMatchSnapshot();
     });
 
     it("Link definition", () => {
-        const result = MarkdownGenerator.linkDefinition("Some text", "https://google.com/");
-        expect(result).toBe("[Some text]: https://google.com/");
+        const result = MarkdownGenerator.LinkDefinition("Some text", "https://google.com/");
+        expect(result).toMatchSnapshot();
     });
 
     it("Link definition with a hover text", () => {
-        const result = MarkdownGenerator.linkDefinition("Some text", "https://google.com/", "Hover text");
-        expect(result).toBe("[Some text]: https://google.com/ \"Hover text\"");
+        const result = MarkdownGenerator.LinkDefinition("Some text", "https://google.com/", "Hover text");
+        expect(result).toMatchSnapshot();
     });
 });
 
 describe("Image", () => {
     it("Simple image", () => {
-        const result = MarkdownGenerator.image("Alt text", "https://path.com/image.jpg");
-        expect(result).toBe("![Alt text](https://path.com/image.jpg)");
+        const result = MarkdownGenerator.Image("Alt text", "https://path.com/image.jpg");
+        expect(result).toMatchSnapshot();
     });
 
     it("Simple image with a hover text", () => {
-        const result = MarkdownGenerator.image("Alt text", "https://google.com/", "Hover text");
-        expect(result).toBe("![Alt text](https://google.com/ \"Hover text\")");
+        const result = MarkdownGenerator.Image("Alt text", "https://google.com/", "Hover text");
+        expect(result).toMatchSnapshot();
     });
 });
 
 describe("Horizontal rule", () => {
     it("Simple horizontal rule", () => {
-        const result = MarkdownGenerator.horizontalRule();
-        expect(result).toBe("---");
+        const result = MarkdownGenerator.HorizontalRule();
+        expect(result).toMatchSnapshot();
     });
 
     it("Custom length", () => {
-        const result = MarkdownGenerator.horizontalRule(undefined, 10);
-        expect(result).toBe("----------");
+        const result = MarkdownGenerator.HorizontalRule(undefined, 10);
+        expect(result).toMatchSnapshot();
     });
 
     it("Custom symbol", () => {
-        const result = MarkdownGenerator.horizontalRule("*");
-        expect(result).toBe("***");
+        const result = MarkdownGenerator.HorizontalRule("*");
+        expect(result).toMatchSnapshot();
     });
 
     it("Throws when length is lower than 3", () => {
-        expect(() => MarkdownGenerator.horizontalRule(undefined, 0)).toThrow();
+        expect(() => MarkdownGenerator.HorizontalRule(undefined, 0)).toThrow();
     });
 
     it("Throws when symbol is not in allowed list.", () => {
-        expect(() => MarkdownGenerator.horizontalRule("1" as any)).toThrow();
+        expect(() => MarkdownGenerator.HorizontalRule("1" as any)).toThrow();
     });
+});
+
+it("Escape string", () => {
+    const textToEscape = MarkdownGenerator.Link("Google", "https://google.com/");
+    const result = MarkdownGenerator.EscapeString(textToEscape);
+    expect(result).toMatchSnapshot();
 });

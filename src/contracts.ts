@@ -7,13 +7,13 @@ export interface CodeOptions {
 }
 
 export interface UnorderedListOptions {
-    symbol?: UnorderListSymbols;
+    symbol?: UnorderedListSymbols;
 }
 
-export type UnorderListSymbols = "*" | "+" | "-";
+export type UnorderedListSymbols = "*" | "+" | "-";
 
 export interface TableOptions {
-    removeColummIfEmpty?: boolean;
+    removeColumnIfEmpty?: boolean;
 }
 
 export interface TableHeader {
@@ -23,7 +23,6 @@ export interface TableHeader {
 
 export type TableAlign = "left" | "center" | "right" | "none";
 
-// tslint:disable-next-line:no-empty-interface
 export interface MarkdownList extends Array<string | MarkdownList> { }
 
 export type HorizontalRuleSymbol = "-" | "*" | "_";

@@ -267,3 +267,4 @@ package-lock.json
 **/webpack.config.js
 
 **/*.js.map
+coverage

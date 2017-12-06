@@ -2,8 +2,8 @@ import * as S from "string";
 
 import { MarkdownList } from "../contracts";
 
-export class ListGenerator {
-    public static renderList(list: MarkdownList, level: number, ordered: boolean, symbol?: string): string[] {
+export namespace ListGenerator {
+    export function RenderList(list: MarkdownList, level: number, ordered: boolean, symbol?: string): string[] {
         let renderedList: string[] = [];
 
         list.forEach((x, index) => {
@@ -17,10 +17,10 @@ export class ListGenerator {
                     listSymbol = `${index + 1}.`;
                 }
 
-                renderedList.push(this.getListItem(x, level, listSymbol));
+                renderedList.push(GetListItem(x, level, listSymbol));
             } else {
                 // Handles if it's an array
-                const result = this.renderList(x, ++level, ordered, symbol);
+                const result = RenderList(x, ++level, ordered, symbol);
                 renderedList = renderedList.concat(result);
             }
         });
@@ -28,7 +28,7 @@ export class ListGenerator {
         return renderedList;
     }
 
-    protected static getListItem(text: string, level: number, symbol: string): string {
+    export function GetListItem(text: string, level: number, symbol: string): string {
         const space = S(" ").repeat(level * 4).s;
         const sanitizedText = S(text).trim();
 

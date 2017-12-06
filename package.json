@@ -5,24 +5,31 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "coveralls": "coveralls < coverage/lcov.info",
     "test": "jest",
+    "test-ci": "jest --maxWorkers=4",
     "tslint": "tslint --project . --config ./tslint.json",
     "test-watch": "jest --watchAll",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "prepublishOnly": "npm run build && rimraf dist/debug.*"
   },
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "dependencies": {
-    "@types/string": "0.0.28",
+    "@types/string": "0.0.29",
     "string": "^3.3.3"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.5",
-    "@types/sinon": "^2.3.3",
-    "jest": "^20.0.4",
-    "sinon": "^2.4.1",
-    "ts-jest": "^20.0.7",
-    "tslint": "^5.5.0",
-    "typescript": "^2.4.2"
+    "@types/jest": "^21.1.8",
+    "@types/sinon": "^4.0.0",
+    "coveralls": "^3.0.0",
+    "jest": "^21.2.1",
+    "rimraf": "^2.6.2",
+    "simplr-tslint": "0.0.1",
+    "sinon": "^4.1.2",
+    "ts-jest": "^21.2.4",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
   },
   "files": [
     "dist",
@@ -32,10 +39,16 @@
     "!*.config.js"
   ],
   "jest": {
+    "collectCoverage": true,
+    "mapCoverage": true,
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__/"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",

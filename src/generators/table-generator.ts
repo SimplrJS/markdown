@@ -5,56 +5,58 @@ import {
     TableOptions,
     TableAlign
 } from "../contracts";
+import { Helpers } from "../utils/helpers";
 
-// TODO: Make real column content alignments.
-export class TableGenerator {
-    public static renderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
-        let lines: string[] = [];
+export namespace TableGenerator {
+    export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
         const columnsWidths: number[] = [];
-        const removeColumnIfEmpty = options != null && options.removeColummIfEmpty;
+        const removeColumnIfEmpty = options != null && options.removeColumnIfEmpty;
 
-        // Calculate maxWidths of columns
-        headers.forEach((header, headerIndex) => {
-            const rows = content.map<string>(x => {
-                // Fill missing columns.
-                if (x.length < headers.length) {
-                    this.fillArray(x, headers.length);
-                }
-
-                return x[headerIndex];
-            });
-            columnsWidths[headerIndex] = this.getMaxColumnWidth(this.getHeaderText(header), rows, removeColumnIfEmpty);
-
-            if (removeColumnIfEmpty && columnsWidths[headerIndex] === 0) {
-                // Remove columns if they are empty
-                headers.splice(headerIndex, 1);
-
-                content.forEach(row => {
-                    if (row[headerIndex] != null) {
-                        row.splice(headerIndex, 1);
-                    }
-                });
+        let filledRows = content.map(row => {
+            if (row.length < headers.length) {
+                return Helpers.FillArray(row, headers.length, "");
+            } else {
+                return row;
             }
         });
 
-        // Header
-        lines = lines.concat(this.renderTableHeader(headers, columnsWidths));
-        // Contents
-        lines = lines.concat(this.renderTableContents(content, columnsWidths));
+        const finalHeaders = headers
+            .map((header, headerIndex) => {
+                const rows = filledRows.map(x => x[headerIndex]);
+                columnsWidths[headerIndex] = GetMaxColumnWidth(GetHeaderText(header), rows, removeColumnIfEmpty);
+
+                if (removeColumnIfEmpty && columnsWidths[headerIndex] === 0) {
+                    filledRows = filledRows
+                        .filter(x => x[headerIndex] != null)
+                        .map(x => x.splice(0, headerIndex));
+
+                    return null;
+                }
+
+                return header;
+            })
+            .filter(x => x != null) as Array<string | TableHeader>;
+
+        const lines = [
+            // Header
+            ...RenderTableHeader(finalHeaders, columnsWidths),
+            // Content
+            ...RenderTableContents(filledRows, columnsWidths)
+        ];
 
         return lines;
     }
 
-    protected static renderTableHeader(headers: Array<string | TableHeader>, columnsWidths: number[]): string[] {
+    export function RenderTableHeader(headers: Array<string | TableHeader>, columnsWidths: number[]): string[] {
         // | Header | Header2 |
         let tableHeader = "";
         // | ------ | ------- |
         let headerSeparator = "";
         headers.forEach((header, headerIndex) => {
             const columnWidth = columnsWidths[headerIndex];
-            const columnAlign = this.getHeaderAlign(header);
+            const columnAlign = GetHeaderAlign(header);
             const isLast = (headerIndex + 1 === headers.length);
-            tableHeader += this.renderCell(this.getHeaderText(header), columnWidth, isLast);
+            tableHeader += RenderCell(GetHeaderText(header), columnWidth, isLast);
 
             let columnAlignText: string;
             switch (columnAlign) {
@@ -68,16 +70,18 @@ export class TableGenerator {
                     columnAlignText = S(":").padLeft(columnWidth, "-").s;
                     break;
                 }
-                // TODO: Implement center.
-                // :---:
                 case "center":
+                    // :---:
+                    columnAlignText = S(":").padRight(columnWidth, "-").s;
+                    columnAlignText = columnAlignText.slice(0, -1) + ":";
+                    break;
                 case "none":
                 default: {
                     columnAlignText = S("-").repeat(columnWidth).s;
                 }
             }
 
-            headerSeparator += this.renderCell(columnAlignText, columnWidth, isLast);
+            headerSeparator += RenderCell(columnAlignText, columnWidth, isLast);
         });
 
         return [
@@ -86,7 +90,7 @@ export class TableGenerator {
         ];
     }
 
-    protected static renderTableContents(content: string[][], columnsWidths: number[]): string[] {
+    export function RenderTableContents(content: string[][], columnsWidths: number[]): string[] {
         return content.map<string>(row => {
             let rowText: string = "";
 
@@ -94,14 +98,14 @@ export class TableGenerator {
                 const columnWidth = columnsWidths[columnIndex];
                 const isLast = (columnIndex + 1 === row.length);
 
-                rowText += this.renderCell(column, columnWidth, isLast);
+                rowText += RenderCell(column, columnWidth, isLast);
             });
 
             return rowText;
         });
     }
 
-    protected static renderCell(text: string, width: number, close?: boolean): string {
+    export function RenderCell(text: string, width: number, close?: boolean): string {
         const sanitizedText = S(text).trim().s;
         let cell = `| ${S(sanitizedText).padRight(width).s} `;
 
@@ -112,7 +116,7 @@ export class TableGenerator {
         return cell;
     }
 
-    protected static getHeaderText(header: string | TableHeader): string {
+    export function GetHeaderText(header: string | TableHeader): string {
         let headerText: string;
         if (typeof header === "string") {
             headerText = header;
@@ -123,7 +127,7 @@ export class TableGenerator {
         return headerText;
     }
 
-    protected static getHeaderAlign(header: string | TableHeader): TableAlign {
+    export function GetHeaderAlign(header: string | TableHeader): TableAlign {
         if (typeof header === "string") {
             return "none";
         } else {
@@ -131,7 +135,7 @@ export class TableGenerator {
         }
     }
 
-    protected static getMaxColumnWidth(headerText: string, rows: string[], removeIfEmpty?: boolean): number {
+    export function GetMaxColumnWidth(headerText: string, rows: string[], removeIfEmpty?: boolean): number {
         let maxWidth = 0;
 
         rows.forEach(x => {
@@ -147,14 +151,5 @@ export class TableGenerator {
         }
 
         return maxWidth;
-    }
-
-    protected static fillArray(arr: string[], length: number): void {
-        const count = length - arr.length;
-        if (count > 0) {
-            for (let i = 0; i < count; i++) {
-                arr.push("");
-            }
-        }
     }
 }
