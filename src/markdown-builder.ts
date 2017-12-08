@@ -34,7 +34,7 @@ export class MarkdownBuilder {
     }
 
     public Blockquote(text: string | string[] | MarkdownBuilder): this {
-        this.output = this.output.concat(this.resolveInput(text));
+        this.output = this.output.concat(MarkdownGenerator.Blockquote(this.resolveInput(text)));
 
         return this;
     }
