@@ -6,7 +6,7 @@ Array [
   "===",
   "",
   "## Bar ##",
-  "blockquote",
+  "> blockquote",
   "",
   "[Link Text][reference-text]",
   "",
