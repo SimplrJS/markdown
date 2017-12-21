@@ -414,8 +414,16 @@ describe("Horizontal rule", () => {
     });
 });
 
-it("Escape string", () => {
-    const textToEscape = MarkdownGenerator.Link("Google", "https://google.com/");
-    const result = MarkdownGenerator.EscapeString(textToEscape);
-    expect(result).toMatchSnapshot();
+describe("Escape string", () => {
+    it("Escape url", () => {
+        const textToEscape = MarkdownGenerator.Link("Google", "https://google.com/");
+        const result = MarkdownGenerator.EscapeString(textToEscape);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Escape symbols", () => {
+        const textToEscape = "\ ` * _ { } [ ] ( ) # + - . ! |";
+        const result = MarkdownGenerator.EscapeString(textToEscape);
+        expect(result).toMatchSnapshot();
+    });
 });
