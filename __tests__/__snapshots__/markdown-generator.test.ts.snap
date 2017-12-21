@@ -81,7 +81,7 @@ exports[`Emphasis italic using asterisks 1`] = `"*Some text*"`;
 
 exports[`Emphasis italic using underscores 1`] = `"_Some text_"`;
 
-exports[`Escape string Escape symbols 1`] = `" \\\\\` \\\\* \\\\_ \\\\{ \\\\} \\\\[ \\\\] \\\\( \\\\) \\\\# \\\\+ \\\\- \\\\. \\\\! \\\\|"`;
+exports[`Escape string Escape symbols 1`] = `" \\\\\` \\\\* \\\\_ \\\\{ \\\\} \\\\[ \\\\] \\\\( \\\\) \\\\# \\\\+ \\\\- \\\\. \\\\! &#124"`;
 
 exports[`Escape string Escape url 1`] = `"\\\\[Google\\\\]\\\\(https://google\\\\.com/\\\\)"`;
 
