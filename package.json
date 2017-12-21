@@ -26,13 +26,13 @@
     "string": "^3.3.3"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.8",
+    "@types/jest": "^21.1.9",
     "coveralls": "^3.0.0",
-    "jest": "^21.2.1",
+    "jest": "^22.0.3",
     "rimraf": "^2.6.2",
     "simplr-tslint": "0.0.1",
-    "ts-jest": "^21.2.4",
-    "ts-node": "^3.3.0",
+    "ts-jest": "^22.0.0",
+    "ts-node": "^4.0.2",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
