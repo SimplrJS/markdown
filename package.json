@@ -1,6 +1,6 @@
 {
   "name": "@simplrjs/markdown",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Markdown generator",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
