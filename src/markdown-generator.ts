@@ -236,6 +236,8 @@ export namespace MarkdownGenerator {
      * @see https://daringfireball.net/projects/markdown/syntax#backslash
      */
     export function EscapeString(text: string): string {
-        return text.replace(/[\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!\|]/g, "\\$&");
+        return text
+            .replace(/[\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!]/g, "\\$&")
+            .replace(/\|/, "&#124");
     }
 }
