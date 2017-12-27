@@ -14,6 +14,7 @@ export type UnorderedListSymbols = "*" | "+" | "-";
 
 export interface TableOptions {
     removeColumnIfEmpty?: boolean;
+    removeRowIfEmpty?: boolean;
 }
 
 export interface TableHeader {
