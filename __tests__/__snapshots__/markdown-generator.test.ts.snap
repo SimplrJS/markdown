@@ -201,6 +201,33 @@ Array [
 ]
 `;
 
+exports[`Table Table with a single column filled. 1`] = `
+Array [
+  "| Name   |",
+  "| ------ |",
+  "| TValue |",
+]
+`;
+
+exports[`Table Table with an empty column in the middle. 1`] = `
+Array [
+  "| Name   | Default type |",
+  "| ------ | ------------ |",
+  "| TValue | string       |",
+  "| T      | string       |",
+  "| TKey   | string       |",
+]
+`;
+
+exports[`Table Table with empty rows 1`] = `
+Array [
+  "| Name   | InitialValue |",
+  "| ------ | ------------ |",
+  "| TValue | {}           |",
+  "| TKey   | {}           |",
+]
+`;
+
 exports[`Underline header Working example 1`] = `
 Array [
   "Some text",
