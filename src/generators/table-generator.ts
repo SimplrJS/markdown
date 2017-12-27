@@ -11,6 +11,7 @@ export namespace TableGenerator {
     export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
         const columnsWidths: number[] = [];
         const removeColumnIfEmpty = options != null && options.removeColumnIfEmpty;
+        const removeRowIfEmpty = options != null && options.removeRowIfEmpty;
 
         let filledRows = content.map(row => {
             if (row.length < headers.length) {
@@ -20,28 +21,35 @@ export namespace TableGenerator {
             }
         });
 
-        const finalHeaders = headers
-            .map((header, headerIndex) => {
-                const rows = filledRows.map(x => x[headerIndex]);
-                columnsWidths[headerIndex] = GetMaxColumnWidth(GetHeaderText(header), rows, removeColumnIfEmpty);
+        // Removing empty rows if option `removeRowIfEmpty` enabled.
+        if (removeRowIfEmpty) {
+            filledRows = filledRows.filter(row => !row.every(cell => cell.length === 0));
+        }
 
-                if (removeColumnIfEmpty && columnsWidths[headerIndex] === 0) {
-                    filledRows = filledRows
-                        .filter(x => x[headerIndex] != null)
-                        .map(x => x.splice(0, headerIndex));
+        // Indexes of empty columns, that should be removed.
+        const columnsToRemove: number[] = [];
 
-                    return null;
-                }
+        // Filling columns widths.
+        headers.forEach((header, index) => {
+            // Getting rows of a single column
+            const rows = filledRows.map(x => x[index]);
+            columnsWidths[index] = GetMaxColumnWidth(GetHeaderText(header), rows, removeColumnIfEmpty);
 
-                return header;
-            })
-            .filter(x => x != null) as Array<string | TableHeader>;
+            if (removeColumnIfEmpty && columnsWidths[index] === 0) {
+                columnsToRemove.push(index);
+            }
+        });
+
+        // Removing unnecessary columns.
+        const finalHeaders = headers.filter((x, index) => columnsToRemove.indexOf(index) === -1);
+        const finalRows = filledRows.map(row => row.filter((x, index) => columnsToRemove.indexOf(index) === -1));
+        const finalColumnsWidths = columnsWidths.filter((x, index) => columnsToRemove.indexOf(index) === -1);
 
         const lines = [
             // Header
-            ...RenderTableHeader(finalHeaders, columnsWidths),
+            ...RenderTableHeader(finalHeaders, finalColumnsWidths),
             // Content
-            ...RenderTableContents(filledRows, columnsWidths)
+            ...RenderTableContents(finalRows, finalColumnsWidths)
         ];
 
         return lines;

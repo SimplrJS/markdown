@@ -275,6 +275,53 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
+    it("Table with a single column filled.", () => {
+        const headers = ["Name", "Constraint type", "Default type"];
+        const rows = [
+            ["TValue", "", ""]
+        ];
+
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Table with an empty column in the middle.", () => {
+        const headers = ["Name", "Constraint type", "Default type"];
+        const rows = [
+            ["TValue", "", "string"],
+            ["T", "", "string"],
+            ["TKey ", "", "string"],
+        ];
+
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Table with empty rows", () => {
+        const headers = ["Name", "Constraint type", "Default type", "InitialValue"];
+        const rows = [
+            ["TValue", "", "", "{}"],
+            ["", "", "", ""],
+            ["TKey", "", "", "{}"],
+            ["", "", "", ""]
+        ];
+
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true, removeRowIfEmpty: true });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Table with rows that has a single cell filled", () => {
+        const headers = ["Name", "Constraint type", "Default type", "InitialValue"];
+        const rows = [
+            ["TValue", "", "", ""],
+            ["", "Object", "", ""],
+            ["", "", "Object", ""],
+            ["", "", "", "{}"]
+        ];
+
+        const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
+    });
+
     it("Simple example with mixed alignments", () => {
         const headers: Array<TableHeader | string> = [
             {
