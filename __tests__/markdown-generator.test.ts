@@ -473,4 +473,16 @@ describe("Escape string", () => {
         const result = MarkdownGenerator.EscapeString(textToEscape);
         expect(result).toMatchSnapshot();
     });
+
+    it("Escaped character in table", () => {
+        const headers = ["Name", "Constraint type", "Default type"];
+        const rows = [
+            ["TValue", "string", "text"],
+            ["T", MarkdownGenerator.EscapeString("string | undefined"), "text"],
+            ["TKey ", "string", "text"],
+        ];
+
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
+    });
 });
