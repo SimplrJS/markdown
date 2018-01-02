@@ -238,6 +238,8 @@ export namespace MarkdownGenerator {
     export function EscapeString(text: string): string {
         return text
             .replace(/[\\\`\*\_\{\}\[\]\(\)\#\+\-\.\!]/g, "\\$&")
-            .replace(/\|/, "&#124;");
+            .replace(/\|/, "&#124;")
+            .replace(/\</, "&#60;")
+            .replace(/\>/, "&#62;");
     }
 }
