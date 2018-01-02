@@ -81,7 +81,7 @@ exports[`Emphasis italic using asterisks 1`] = `"*Some text*"`;
 
 exports[`Emphasis italic using underscores 1`] = `"_Some text_"`;
 
-exports[`Escape string Escape symbols 1`] = `" \\\\\` \\\\* \\\\_ \\\\{ \\\\} \\\\[ \\\\] \\\\( \\\\) \\\\# \\\\+ \\\\- \\\\. \\\\! &#124;"`;
+exports[`Escape string Escape symbols 1`] = `" \\\\\` \\\\* \\\\_ \\\\{ \\\\} \\\\[ \\\\] \\\\( \\\\) \\\\# \\\\+ \\\\- \\\\. \\\\! &#124; &#60; &#62;"`;
 
 exports[`Escape string Escape url 1`] = `"\\\\[Google\\\\]\\\\(https://google\\\\.com/\\\\)"`;
 
@@ -92,6 +92,7 @@ Array [
   "| TValue | string                  | text         |",
   "| T      | string &#124; undefined | text         |",
   "| TKey   | string                  | text         |",
+  "| TValue | Map&#60;string&#62;     | text         |",
 ]
 `;
 

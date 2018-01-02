@@ -469,7 +469,7 @@ describe("Escape string", () => {
     });
 
     it("Escape symbols", () => {
-        const textToEscape = "\ ` * _ { } [ ] ( ) # + - . ! |";
+        const textToEscape = "\ ` * _ { } [ ] ( ) # + - . ! | < >";
         const result = MarkdownGenerator.EscapeString(textToEscape);
         expect(result).toMatchSnapshot();
     });
@@ -480,6 +480,7 @@ describe("Escape string", () => {
             ["TValue", "string", "text"],
             ["T", MarkdownGenerator.EscapeString("string | undefined"), "text"],
             ["TKey ", "string", "text"],
+            ["TValue", MarkdownGenerator.EscapeString("Map<string>"), "text"]
         ];
 
         const result = MarkdownGenerator.Table(headers, rows);
