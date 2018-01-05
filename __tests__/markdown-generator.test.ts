@@ -205,6 +205,67 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
+    it("Unordered multi level list", () => {
+        const list = [
+            "Level 1",
+            "Level 1",
+            [
+                "Level 2",
+                "Level 2",
+                [
+                    "Level 3",
+                    "Level 3",
+                    [
+                        "Level 4"
+                    ],
+                    "Level 3",
+                    "Level 3"
+                ],
+                "Level 2",
+                "Level 2"
+            ],
+            "Level 1",
+            "Level 1"
+        ];
+
+        const result = MarkdownGenerator.UnorderedList(list);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Unordered multi level list with empty levels", () => {
+        const list = [
+            "Level 1",
+            "Level 1",
+            [],
+            [],
+            [
+                "Level 2",
+                [],
+                "Level 2",
+                [
+                    "Level 3",
+                    [],
+                    "Level 3",
+                    [
+                        "Level 4"
+                    ],
+                    "Level 3",
+                    [],
+                    "Level 3"
+                ],
+                "Level 2",
+                [],
+                "Level 2"
+            ],
+            "Level 1",
+            [],
+            "Level 1"
+        ];
+
+        const result = MarkdownGenerator.UnorderedList(list);
+        expect(result).toMatchSnapshot();
+    });
+
     it("Unordered simple list with a custom symbol", () => {
         const list = [
             "One",
@@ -250,6 +311,67 @@ describe("Lists", () => {
         ];
 
         const result = MarkdownGenerator.OrderedList(list);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Ordered multi level list", () => {
+        const list = [
+            "Level 1 - 1",
+            "Level 1 - 2",
+            [
+                "Level 2 - 1",
+                "Level 2 - 2",
+                [
+                    "Level 3 - 1",
+                    "Level 3 - 2",
+                    [
+                        "Level 4 - 1"
+                    ],
+                    "Level 3 - 3",
+                    "Level 3 - 4"
+                ],
+                "Level 2 - 3",
+                "Level 2 - 4"
+            ],
+            "Level 1 - 3",
+            "Level 1 - 4"
+        ];
+
+        const result = MarkdownGenerator.UnorderedList(list);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Ordered multi level list with empty levels", () => {
+        const list = [
+            "Level 1 - 1",
+            "Level 1 - 2",
+            [],
+            [],
+            [
+                "Level 2 - 1",
+                [],
+                "Level 2 - 2",
+                [
+                    "Level 3 - 1",
+                    [],
+                    "Level 3 - 2",
+                    [
+                        "Level 4 - 1"
+                    ],
+                    "Level 3 - 3",
+                    [],
+                    "Level 3 - 4"
+                ],
+                "Level 2 - 3",
+                [],
+                "Level 2 - 4"
+            ],
+            "Level 1 - 3",
+            [],
+            "Level 1 - 4"
+        ];
+
+        const result = MarkdownGenerator.UnorderedList(list);
         expect(result).toMatchSnapshot();
     });
 });
