@@ -14,24 +14,24 @@ export namespace TableGenerator {
             escapeCharacter: "&#124;",
             ...options
         };
-        const charToEscape = "|";
+        const patternToEscape = /\|/g;
 
         // Escape
         if (resolvedOptions.escape) {
             // Headers
             headers = headers.map(header => {
                 if (typeof header === "string") {
-                    return header.replace(charToEscape, resolvedOptions.escapeCharacter);
+                    return header.replace(patternToEscape, resolvedOptions.escapeCharacter);
                 } else {
                     return {
                         ...header,
-                        text: header.text.replace(charToEscape, resolvedOptions.escapeCharacter)
+                        text: header.text.replace(patternToEscape, resolvedOptions.escapeCharacter)
                     };
                 }
             });
 
             // Content
-            content = content.map(x => x.map(y => y.replace(charToEscape, resolvedOptions.escapeCharacter)));
+            content = content.map(x => x.map(y => y.replace(patternToEscape, resolvedOptions.escapeCharacter)));
         }
 
         const columnsWidths: number[] = [];

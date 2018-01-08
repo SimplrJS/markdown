@@ -69,15 +69,9 @@ exports[`Code block with array of text without language option with escape 1`] =
 Array [
   "\`\`\`",
   "function sum(a: number, b: number): number {",
-<<<<<<< HEAD
-  "\\\\\`\`\`",
+  "\\\\\`\\\\\`\\\\\`",
   "   return a + b;",
-  "\\\\\`\`\`",
-=======
-  "\`\`\`",
-  "   return a + b;",
-  "\`\`\`",
->>>>>>> c7c26e9c44b41f285999d9a1b6c2a7ca42797ce8
+  "\\\\\`\\\\\`\\\\\`",
   "}",
   "\`\`\`",
 ]

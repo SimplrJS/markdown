@@ -73,7 +73,7 @@ export namespace MarkdownGenerator {
 
         // Escape string
         if (resolvedOptions.escape) {
-            textLines = textLines.map(x => x.replace(">", resolvedOptions.escapeCharacter));
+            textLines = textLines.map(x => x.replace(/\>/g, resolvedOptions.escapeCharacter));
         }
 
         const lines: string[] = [];
@@ -216,7 +216,7 @@ export namespace MarkdownGenerator {
 
         // Escape
         if (resolvedOptions.escape) {
-            sanitizedText = sanitizedText.replace("`", resolvedOptions.escapeCharacter);
+            sanitizedText = sanitizedText.replace(/\`/g, resolvedOptions.escapeCharacter);
         }
 
         return `\`${sanitizedText}\``;
@@ -242,7 +242,7 @@ export namespace MarkdownGenerator {
 
         // Escape
         if (resolvedOptions.escape) {
-            sanitizedText = sanitizedText.map(x => x.replace("`", resolvedOptions.escapeCharacter));
+            sanitizedText = sanitizedText.map(x => x.replace(/\`/g, resolvedOptions.escapeCharacter));
         }
 
         const codeBlockTag = "```";
