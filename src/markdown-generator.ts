@@ -9,7 +9,8 @@ import {
     UnorderedListSymbols,
     MarkdownList,
     HorizontalRuleSymbol,
-    BlockquoteOptions
+    BlockquoteOptions,
+    InlineCodeOptions
 } from "./contracts";
 
 import { ListGenerator } from "./generators/list-generator";
@@ -205,8 +206,18 @@ export namespace MarkdownGenerator {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    export function InlineCode(text: string): string {
-        const sanitizedText = S(text).trim().s;
+    export function InlineCode(text: string, options?: Partial<InlineCodeOptions>): string {
+        const resolvedOptions: InlineCodeOptions = {
+            escape: true,
+            escapeCharacter: "\\`",
+            ...options
+        };
+        let sanitizedText = S(text).trim().s;
+
+        // Escape
+        if (resolvedOptions.escape) {
+            sanitizedText = sanitizedText.replace("`", resolvedOptions.escapeCharacter);
+        }
 
         return `\`${sanitizedText}\``;
     }
@@ -215,13 +226,23 @@ export namespace MarkdownGenerator {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    export function Code(text: string | string[], options?: CodeOptions): string[] {
+    export function Code(text: string | string[], options?: Partial<CodeOptions>): string[] {
         let sanitizedText: string[] = [];
+        const resolvedOptions: CodeOptions = {
+            escape: true,
+            escapeCharacter: "\\`",
+            ...options
+        };
 
         if (typeof text === "string") {
             sanitizedText = S(text).trim().lines();
         } else {
             sanitizedText = text;
+        }
+
+        // Escape
+        if (resolvedOptions.escape) {
+            sanitizedText = sanitizedText.map(x => x.replace("`", resolvedOptions.escapeCharacter));
         }
 
         const codeBlockTag = "```";

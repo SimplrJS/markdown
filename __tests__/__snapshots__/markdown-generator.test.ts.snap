@@ -65,6 +65,36 @@ Array [
 ]
 `;
 
+exports[`Code block with array of text without language option with escape 1`] = `
+Array [
+  "\`\`\`",
+  "function sum(a: number, b: number): number {",
+<<<<<<< HEAD
+  "\\\\\`\`\`",
+  "   return a + b;",
+  "\\\\\`\`\`",
+=======
+  "\`\`\`",
+  "   return a + b;",
+  "\`\`\`",
+>>>>>>> c7c26e9c44b41f285999d9a1b6c2a7ca42797ce8
+  "}",
+  "\`\`\`",
+]
+`;
+
+exports[`Code block with array of text without language option without escape 1`] = `
+Array [
+  "\`\`\`",
+  "function sum(a: number, b: number): number {",
+  "\`\`\`",
+  "   return a + b;",
+  "\`\`\`",
+  "}",
+  "\`\`\`",
+]
+`;
+
 exports[`Code block with text without language option 1`] = `
 Array [
   "\`\`\`",
@@ -76,6 +106,10 @@ Array [
 `;
 
 exports[`Code inline 1`] = `"\`git status\`"`;
+
+exports[`Code inline with escape 1`] = `"\`git \\\\\` status\`"`;
+
+exports[`Code inline without escape 1`] = `"\`git \`hello\` status\`"`;
 
 exports[`Emphasis StrikeThrough 1`] = `"~~Some text~~"`;
 

@@ -154,6 +154,18 @@ describe("Code", () => {
         expect(result).toMatchSnapshot();
     });
 
+    it("inline with escape", () => {
+        const text = "git ` status";
+        const result = MarkdownGenerator.InlineCode(text, { escape: true });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("inline without escape", () => {
+        const text = "git `hello` status";
+        const result = MarkdownGenerator.InlineCode(text, { escape: false });
+        expect(result).toMatchSnapshot();
+    });
+
     it("block with array of text without language option", () => {
         const codeExample = [
             "function sum(a: number, b: number): number {",
@@ -161,6 +173,30 @@ describe("Code", () => {
             "}"
         ];
         const result = MarkdownGenerator.Code(codeExample);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("block with array of text without language option with escape", () => {
+        const codeExample = [
+            "function sum(a: number, b: number): number {",
+            "```",
+            "   return a + b;",
+            "```",
+            "}"
+        ];
+        const result = MarkdownGenerator.Code(codeExample, { escape: true });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("block with array of text without language option without escape", () => {
+        const codeExample = [
+            "function sum(a: number, b: number): number {",
+            "```",
+            "   return a + b;",
+            "```",
+            "}"
+        ];
+        const result = MarkdownGenerator.Code(codeExample, { escape: false });
         expect(result).toMatchSnapshot();
     });
 

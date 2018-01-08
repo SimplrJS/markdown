@@ -8,7 +8,8 @@ import {
     UnorderedListOptions,
     UnorderedListSymbols,
     MarkdownList,
-    HorizontalRuleSymbol
+    HorizontalRuleSymbol,
+    InlineCodeOptions
 } from "./contracts";
 
 export type TextHandler = (md: typeof MarkdownGenerator) => string | string[];
@@ -104,7 +105,7 @@ export class MarkdownBuilder {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    public InlineCode(text: string): this {
+    public InlineCode(text: string, options?: Partial<InlineCodeOptions>): this {
         this.output.push(MarkdownGenerator.InlineCode(text));
 
         return this;
@@ -114,7 +115,7 @@ export class MarkdownBuilder {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    public Code(text: string | string[], options?: CodeOptions): this {
+    public Code(text: string | string[], options?: Partial<CodeOptions>): this {
         this.output = this.output.concat(MarkdownGenerator.Code(text, options));
 
         return this;
