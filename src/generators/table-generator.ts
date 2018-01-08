@@ -10,28 +10,27 @@ import { Helpers } from "../utils/helpers";
 export namespace TableGenerator {
     export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: Partial<TableOptions>): string[] {
         const resolvedOptions: TableOptions = {
-            escape: true,
-            escapeCharacter: "&#124;",
+            escapePipeChar: "&#124;",
             ...options
         };
         const patternToEscape = /\|/g;
 
         // Escape
-        if (resolvedOptions.escape) {
+        if (resolvedOptions.escapePipeChar != null) {
             // Headers
             headers = headers.map(header => {
                 if (typeof header === "string") {
-                    return header.replace(patternToEscape, resolvedOptions.escapeCharacter);
+                    return header.replace(patternToEscape, resolvedOptions.escapePipeChar!);
                 } else {
                     return {
                         ...header,
-                        text: header.text.replace(patternToEscape, resolvedOptions.escapeCharacter)
+                        text: header.text.replace(patternToEscape, resolvedOptions.escapePipeChar!)
                     };
                 }
             });
 
             // Content
-            content = content.map(x => x.map(y => y.replace(patternToEscape, resolvedOptions.escapeCharacter)));
+            content = content.map(x => x.map(y => y.replace(patternToEscape, resolvedOptions.escapePipeChar!)));
         }
 
         const columnsWidths: number[] = [];

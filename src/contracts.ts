@@ -1,20 +1,21 @@
-/**
- * Base options for escape.
- */
-export interface EscapeOptions {
-    escape: boolean;
-    escapeCharacter: string;
-}
-
 export interface EmphasisOptions {
     useUnderscores?: boolean;
 }
 
-export interface CodeOptions extends EscapeOptions {
+export interface CodeOptions {
     lang?: string;
+    /**
+     * @default "\\`"
+     */
+    escapeBacktickChar?: string;
 }
 
-export type InlineCodeOptions = EscapeOptions;
+export interface InlineCodeOptions {
+    /**
+     * @default "\\`"
+     */
+    escapeBacktickChar?: string;
+}
 
 export interface UnorderedListOptions {
     symbol?: UnorderedListSymbols;
@@ -22,9 +23,13 @@ export interface UnorderedListOptions {
 
 export type UnorderedListSymbols = "*" | "+" | "-";
 
-export interface TableOptions extends EscapeOptions {
+export interface TableOptions {
     removeColumnIfEmpty?: boolean;
     removeRowIfEmpty?: boolean;
+    /**
+     * @default "&#124;"
+     */
+    escapePipeChar?: string;
 }
 
 export interface TableHeader {
@@ -38,4 +43,9 @@ export interface MarkdownList extends Array<string | MarkdownList> { }
 
 export type HorizontalRuleSymbol = "-" | "*" | "_";
 
-export type BlockquoteOptions = EscapeOptions;
+export interface BlockquoteOptions {
+    /**
+     * @default undefined
+     */
+    escapeGreaterThanChar?: string;
+}

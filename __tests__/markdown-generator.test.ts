@@ -57,7 +57,7 @@ describe("BlockQuotes", () => {
 
     it("Simple working example with escaping", () => {
         const text = ">Some text";
-        const result = MarkdownGenerator.Blockquote(text, { escape: true });
+        const result = MarkdownGenerator.Blockquote(text, { escapeGreaterThanChar: "\\>" });
         expect(result).toMatchSnapshot();
     });
 
@@ -156,13 +156,13 @@ describe("Code", () => {
 
     it("inline with escape", () => {
         const text = "git ` status";
-        const result = MarkdownGenerator.InlineCode(text, { escape: true });
+        const result = MarkdownGenerator.InlineCode(text);
         expect(result).toMatchSnapshot();
     });
 
     it("inline without escape", () => {
         const text = "git `hello` status";
-        const result = MarkdownGenerator.InlineCode(text, { escape: false });
+        const result = MarkdownGenerator.InlineCode(text, { escapeBacktickChar: undefined });
         expect(result).toMatchSnapshot();
     });
 
@@ -184,7 +184,7 @@ describe("Code", () => {
             "```",
             "}"
         ];
-        const result = MarkdownGenerator.Code(codeExample, { escape: true });
+        const result = MarkdownGenerator.Code(codeExample);
         expect(result).toMatchSnapshot();
     });
 
@@ -196,7 +196,7 @@ describe("Code", () => {
             "```",
             "}"
         ];
-        const result = MarkdownGenerator.Code(codeExample, { escape: false });
+        const result = MarkdownGenerator.Code(codeExample, { escapeBacktickChar: undefined });
         expect(result).toMatchSnapshot();
     });
 
@@ -429,23 +429,23 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Simple example with escape characters", () => {
+    it("Simple example with escape", () => {
         const headers: string[] = ["Property", "Value"];
         const rows = [
             ["Name", "string"],
             ["Age", "number | string"]
         ];
-        const result = MarkdownGenerator.Table(headers, rows, { escape: true });
+        const result = MarkdownGenerator.Table(headers, rows);
         expect(result).toMatchSnapshot();
     });
 
-    it("Simple example with escape characters", () => {
+    it("Simple example without escape", () => {
         const headers: string[] = ["Property", "Value"];
         const rows = [
             ["Name", "string"],
             ["Age", "number | string"]
         ];
-        const result = MarkdownGenerator.Table(headers, rows, { escape: false });
+        const result = MarkdownGenerator.Table(headers, rows, { escapePipeChar: undefined });
         expect(result).toMatchSnapshot();
     });
 

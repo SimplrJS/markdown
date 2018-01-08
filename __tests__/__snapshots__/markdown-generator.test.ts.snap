@@ -309,21 +309,12 @@ Array [
 ]
 `;
 
-exports[`Table Simple example with escape characters 1`] = `
+exports[`Table Simple example with escape 1`] = `
 Array [
   "| Property | Value                |",
   "| -------- | -------------------- |",
   "| Name     | string               |",
   "| Age      | number &#124; string |",
-]
-`;
-
-exports[`Table Simple example with escape characters 2`] = `
-Array [
-  "| Property | Value           |",
-  "| -------- | --------------- |",
-  "| Name     | string          |",
-  "| Age      | number | string |",
 ]
 `;
 
@@ -333,6 +324,15 @@ Array [
   "| :------: | ------ |",
   "| Name     | string |",
   "| Age      | number |",
+]
+`;
+
+exports[`Table Simple example without escape 1`] = `
+Array [
+  "| Property | Value           |",
+  "| -------- | --------------- |",
+  "| Name     | string          |",
+  "| Age      | number | string |",
 ]
 `;
 

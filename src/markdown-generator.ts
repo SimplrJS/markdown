@@ -60,8 +60,6 @@ export namespace MarkdownGenerator {
     export function Blockquote(text: string | string[], options?: Partial<BlockquoteOptions>): string[] {
         let textLines: string[] = [];
         const resolvedOptions: BlockquoteOptions = {
-            escape: false,
-            escapeCharacter: "\\>",
             ...options
         };
 
@@ -72,8 +70,8 @@ export namespace MarkdownGenerator {
         }
 
         // Escape string
-        if (resolvedOptions.escape) {
-            textLines = textLines.map(x => x.replace(/\>/g, resolvedOptions.escapeCharacter));
+        if (resolvedOptions.escapeGreaterThanChar != null) {
+            textLines = textLines.map(x => x.replace(/\>/g, resolvedOptions.escapeGreaterThanChar!));
         }
 
         const lines: string[] = [];
@@ -208,15 +206,14 @@ export namespace MarkdownGenerator {
      */
     export function InlineCode(text: string, options?: Partial<InlineCodeOptions>): string {
         const resolvedOptions: InlineCodeOptions = {
-            escape: true,
-            escapeCharacter: "\\`",
+            escapeBacktickChar: "\\`",
             ...options
         };
         let sanitizedText = S(text).trim().s;
 
         // Escape
-        if (resolvedOptions.escape) {
-            sanitizedText = sanitizedText.replace(/\`/g, resolvedOptions.escapeCharacter);
+        if (resolvedOptions.escapeBacktickChar != null) {
+            sanitizedText = sanitizedText.replace(/\`/g, resolvedOptions.escapeBacktickChar);
         }
 
         return `\`${sanitizedText}\``;
@@ -229,8 +226,7 @@ export namespace MarkdownGenerator {
     export function Code(text: string | string[], options?: Partial<CodeOptions>): string[] {
         let sanitizedText: string[] = [];
         const resolvedOptions: CodeOptions = {
-            escape: true,
-            escapeCharacter: "\\`",
+            escapeBacktickChar: "\\`",
             ...options
         };
 
@@ -241,8 +237,8 @@ export namespace MarkdownGenerator {
         }
 
         // Escape
-        if (resolvedOptions.escape) {
-            sanitizedText = sanitizedText.map(x => x.replace(/\`/g, resolvedOptions.escapeCharacter));
+        if (resolvedOptions.escapeBacktickChar != null) {
+            sanitizedText = sanitizedText.map(x => x.replace(/\`/g, resolvedOptions.escapeBacktickChar!));
         }
 
         const codeBlockTag = "```";
