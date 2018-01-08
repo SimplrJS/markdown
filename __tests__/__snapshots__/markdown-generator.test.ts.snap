@@ -39,6 +39,12 @@ Array [
 ]
 `;
 
+exports[`BlockQuotes Simple working example with escaping 1`] = `
+Array [
+  "> \\\\>Some text",
+]
+`;
+
 exports[`Code block with array of text with language option 1`] = `
 Array [
   "\`\`\`typescript",

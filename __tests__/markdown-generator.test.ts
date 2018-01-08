@@ -55,6 +55,12 @@ describe("BlockQuotes", () => {
         expect(result).toMatchSnapshot();
     });
 
+    it("Simple working example with escaping", () => {
+        const text = ">Some text";
+        const result = MarkdownGenerator.Blockquote(text, { escape: true });
+        expect(result).toMatchSnapshot();
+    });
+
     it("Multiline working example", () => {
         const text = "Some text \n\nOther Text";
         const result = MarkdownGenerator.Blockquote(text);

@@ -27,3 +27,8 @@ export type TableAlign = "left" | "center" | "right" | "none";
 export interface MarkdownList extends Array<string | MarkdownList> { }
 
 export type HorizontalRuleSymbol = "-" | "*" | "_";
+
+export interface BlockquoteOptions {
+    escape: boolean;
+    escapeCharacter: string;
+}

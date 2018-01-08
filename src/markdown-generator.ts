@@ -8,7 +8,8 @@ import {
     UnorderedListOptions,
     UnorderedListSymbols,
     MarkdownList,
-    HorizontalRuleSymbol
+    HorizontalRuleSymbol,
+    BlockquoteOptions
 } from "./contracts";
 
 import { ListGenerator } from "./generators/list-generator";
@@ -55,13 +56,23 @@ export namespace MarkdownGenerator {
         ];
     }
 
-    export function Blockquote(text: string | string[]): string[] {
+    export function Blockquote(text: string | string[], options?: Partial<BlockquoteOptions>): string[] {
         let textLines: string[] = [];
+        const resolvedOptions: BlockquoteOptions = {
+            escape: false,
+            escapeCharacter: "\\>",
+            ...options
+        };
 
         if (typeof text === "string") {
             textLines = S(text).trim().lines();
         } else {
             textLines = text;
+        }
+
+        // Escape string
+        if (resolvedOptions.escape) {
+            textLines = textLines.map(x => x.replace(">", resolvedOptions.escapeCharacter));
         }
 
         const lines: string[] = [];
