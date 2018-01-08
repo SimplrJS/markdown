@@ -238,7 +238,7 @@ export namespace MarkdownGenerator {
         ];
     }
 
-    export function Table(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
+    export function Table(headers: Array<string | TableHeader>, content: string[][], options?: Partial<TableOptions>): string[] {
         return TableGenerator.RenderTable(headers, content, options);
     }
 

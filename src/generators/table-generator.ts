@@ -8,7 +8,32 @@ import {
 import { Helpers } from "../utils/helpers";
 
 export namespace TableGenerator {
-    export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
+    export function RenderTable(headers: Array<string | TableHeader>, content: string[][], options?: Partial<TableOptions>): string[] {
+        const resolvedOptions: TableOptions = {
+            escape: true,
+            escapeCharacter: "&#124;",
+            ...options
+        };
+        const charToEscape = "|";
+
+        // Escape
+        if (resolvedOptions.escape) {
+            // Headers
+            headers = headers.map(header => {
+                if (typeof header === "string") {
+                    return header.replace(charToEscape, resolvedOptions.escapeCharacter);
+                } else {
+                    return {
+                        ...header,
+                        text: header.text.replace(charToEscape, resolvedOptions.escapeCharacter)
+                    };
+                }
+            });
+
+            // Content
+            content = content.map(x => x.map(y => y.replace(charToEscape, resolvedOptions.escapeCharacter)));
+        }
+
         const columnsWidths: number[] = [];
         const removeColumnIfEmpty = options != null && options.removeColumnIfEmpty;
         const removeRowIfEmpty = options != null && options.removeRowIfEmpty;

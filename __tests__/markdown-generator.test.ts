@@ -393,6 +393,26 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
+    it("Simple example with escape characters", () => {
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number | string"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows, { escape: true });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("Simple example with escape characters", () => {
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number | string"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows, { escape: false });
+        expect(result).toMatchSnapshot();
+    });
+
     it("Removes a column if it's empty", () => {
         const headers: string[] = ["Property", "Value"];
         const rows = [

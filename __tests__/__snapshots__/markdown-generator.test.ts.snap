@@ -281,6 +281,24 @@ Array [
 ]
 `;
 
+exports[`Table Simple example with escape characters 1`] = `
+Array [
+  "| Property | Value                |",
+  "| -------- | -------------------- |",
+  "| Name     | string               |",
+  "| Age      | number &#124; string |",
+]
+`;
+
+exports[`Table Simple example with escape characters 2`] = `
+Array [
+  "| Property | Value           |",
+  "| -------- | --------------- |",
+  "| Name     | string          |",
+  "| Age      | number | string |",
+]
+`;
+
 exports[`Table Simple example with mixed alignments 1`] = `
 Array [
   "| Property | Value  |",
