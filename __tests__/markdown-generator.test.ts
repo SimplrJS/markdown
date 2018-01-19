@@ -5,21 +5,21 @@ import * as S from "string";
 const NEW_LINE = "\n";
 
 describe("Header", () => {
-    it("Throw error when number is not finite", () => {
+    it("throw error when number is not finite", () => {
         expect(() => MarkdownGenerator.Header("Some text", "a" as any)).toThrow();
     });
 
-    it("Throw error when number is not valid (0 < x < 7)", () => {
+    it("throw error when number is not valid (0 < x < 7)", () => {
         expect(() => MarkdownGenerator.Header("Some text", 7)).toThrow();
     });
 
-    it("Working example", () => {
+    it("working example", () => {
         const text = "Some text";
         const result = MarkdownGenerator.Header("Some text", 1);
         expect(result).toMatchSnapshot();
     });
 
-    it("Working example with closing header", () => {
+    it("working example with closing header", () => {
         const text = "Some text";
         const result = MarkdownGenerator.Header(text, 1, true);
         expect(result).toMatchSnapshot();
@@ -27,21 +27,21 @@ describe("Header", () => {
 });
 
 describe("Underline header", () => {
-    it("Throw error when number is not finite", () => {
+    it("throw error when number is not finite", () => {
         expect(() => MarkdownGenerator.UnderlineHeader("Some text", "a" as any)).toThrow();
     });
 
-    it("Throw error when number is not valid (0 < x < 3)", () => {
+    it("throw error when number is not valid (0 < x < 3)", () => {
         expect(() => MarkdownGenerator.UnderlineHeader("Some text", 3)).toThrow();
     });
 
-    it("Working example", () => {
+    it("working example", () => {
         const text = "Some text";
         const result = MarkdownGenerator.UnderlineHeader(text, 1);
         expect(result).toMatchSnapshot();
     });
 
-    it("Working example 2", () => {
+    it("working example 2", () => {
         const text = "Some text";
         const result = MarkdownGenerator.UnderlineHeader(text, 2);
         expect(result).toMatchSnapshot();
@@ -49,20 +49,26 @@ describe("Underline header", () => {
 });
 
 describe("BlockQuotes", () => {
-    it("Simple working example", () => {
+    it("simple working example", () => {
         const text = "Some text";
         const result = MarkdownGenerator.Blockquote(text);
         expect(result).toMatchSnapshot();
     });
 
-    it("Multiline working example", () => {
+    it("simple working example with escaping", () => {
+        const text = ">Some text";
+        const result = MarkdownGenerator.Blockquote(text, { escapeGreaterThanChar: "\\>" });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("multiline working example", () => {
         const text = "Some text \n\nOther Text";
         const result = MarkdownGenerator.Blockquote(text);
 
         expect(result).toMatchSnapshot();
     });
 
-    it("Multiline string array working example", () => {
+    it("multiline string array working example", () => {
         const text = [
             "Some text",
             "Other text"
@@ -75,7 +81,7 @@ describe("BlockQuotes", () => {
     /**
      * @see https://daringfireball.net/projects/markdown/syntax#blockquote
      */
-    it("Contains other Markdown elements, including headers, lists, and code blocks", () => {
+    it("contains other Markdown elements, including headers, lists, and code blocks", () => {
         let text: string = "";
         const list = [
             "One",
@@ -134,7 +140,7 @@ describe("Emphasis", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("StrikeThrough", () => {
+    it("strikeThrough", () => {
         const text = "Some text  ";
         const result = MarkdownGenerator.StrikeThrough(text);
         expect(result).toMatchSnapshot();
@@ -148,6 +154,18 @@ describe("Code", () => {
         expect(result).toMatchSnapshot();
     });
 
+    it("inline with escape", () => {
+        const text = "git ` status";
+        const result = MarkdownGenerator.InlineCode(text);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("inline without escape", () => {
+        const text = "git `hello` status";
+        const result = MarkdownGenerator.InlineCode(text, { escapeBacktickChar: undefined });
+        expect(result).toMatchSnapshot();
+    });
+
     it("block with array of text without language option", () => {
         const codeExample = [
             "function sum(a: number, b: number): number {",
@@ -155,6 +173,30 @@ describe("Code", () => {
             "}"
         ];
         const result = MarkdownGenerator.Code(codeExample);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("block with array of text without language option with escape", () => {
+        const codeExample = [
+            "function sum(a: number, b: number): number {",
+            "```",
+            "   return a + b;",
+            "```",
+            "}"
+        ];
+        const result = MarkdownGenerator.Code(codeExample);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("block with array of text without language option without escape", () => {
+        const codeExample = [
+            "function sum(a: number, b: number): number {",
+            "```",
+            "   return a + b;",
+            "```",
+            "}"
+        ];
+        const result = MarkdownGenerator.Code(codeExample, { escapeBacktickChar: undefined });
         expect(result).toMatchSnapshot();
     });
 
@@ -176,7 +218,7 @@ describe("Code", () => {
 });
 
 describe("Lists", () => {
-    it("Unordered simple list", () => {
+    it("simple unordered", () => {
         const list = [
             "One",
             "Two",
@@ -187,7 +229,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Unordered deep list", () => {
+    it("unordered deep", () => {
         const list = [
             "One",
             "Two",
@@ -205,7 +247,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Unordered multi level list", () => {
+    it("unordered multi level", () => {
         const list = [
             "Level 1",
             "Level 1",
@@ -232,7 +274,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Unordered multi level list with empty levels", () => {
+    it("unordered multi level with empty levels", () => {
         const list = [
             "Level 1",
             "Level 1",
@@ -266,7 +308,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Unordered simple list with a custom symbol", () => {
+    it("unordered simple list with a custom symbol", () => {
         const list = [
             "One",
             "Two",
@@ -279,7 +321,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("UnorderedList should throw when given not supported symbol", () => {
+    it("unordered should throw when given not supported symbol", () => {
         expect(() => MarkdownGenerator.UnorderedList([], {
             symbol: "a" as any
         })).toThrow();
@@ -296,7 +338,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Ordered deep list", () => {
+    it("ordered deep", () => {
         const list = [
             "One",
             "Two",
@@ -314,7 +356,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Ordered multi level list", () => {
+    it("ordered multi level", () => {
         const list = [
             "Level 1 - 1",
             "Level 1 - 2",
@@ -341,7 +383,7 @@ describe("Lists", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Ordered multi level list with empty levels", () => {
+    it("ordered multi level list with empty levels", () => {
         const list = [
             "Level 1 - 1",
             "Level 1 - 2",
@@ -377,7 +419,7 @@ describe("Lists", () => {
 });
 
 describe("Table", () => {
-    it("Simple example", () => {
+    it("simple", () => {
         const headers: string[] = ["Property", "Value"];
         const rows = [
             ["Name", "string"],
@@ -387,7 +429,27 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Removes a column if it's empty", () => {
+    it("simple with escape", () => {
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number | string"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows);
+        expect(result).toMatchSnapshot();
+    });
+
+    it("simple without escape", () => {
+        const headers: string[] = ["Property", "Value"];
+        const rows = [
+            ["Name", "string"],
+            ["Age", "number | string"]
+        ];
+        const result = MarkdownGenerator.Table(headers, rows, { escapePipeChar: undefined });
+        expect(result).toMatchSnapshot();
+    });
+
+    it("removes a column if it's empty", () => {
         const headers: string[] = ["Property", "Value"];
         const rows = [
             ["Name"],
@@ -397,7 +459,7 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Table with a single column filled.", () => {
+    it("with a single column filled", () => {
         const headers = ["Name", "Constraint type", "Default type"];
         const rows = [
             ["TValue", "", ""]
@@ -407,7 +469,7 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Table with an empty column in the middle.", () => {
+    it("with an empty column in the middle", () => {
         const headers = ["Name", "Constraint type", "Default type"];
         const rows = [
             ["TValue", "", "string"],
@@ -419,7 +481,7 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Table with empty rows", () => {
+    it("with empty rows", () => {
         const headers = ["Name", "Constraint type", "Default type", "InitialValue"];
         const rows = [
             ["TValue", "", "", "{}"],
@@ -432,7 +494,7 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Table with rows that has a single cell filled", () => {
+    it("with rows that has a single cell filled", () => {
         const headers = ["Name", "Constraint type", "Default type", "InitialValue"];
         const rows = [
             ["TValue", "", "", ""],
@@ -444,7 +506,7 @@ describe("Table", () => {
         const result = MarkdownGenerator.Table(headers, rows, { removeColumnIfEmpty: true });
     });
 
-    it("Simple example with mixed alignments", () => {
+    it("simple with mixed alignments", () => {
         const headers: Array<TableHeader | string> = [
             {
                 text: "Property",
@@ -461,7 +523,7 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Headers with all alignments", () => {
+    it("headers with all alignments", () => {
         const headers: TableHeader[] = [
             {
                 text: "Text1",
@@ -489,7 +551,7 @@ describe("Table", () => {
         expect(result).toMatchSnapshot();
     });
 
-    it("Headers with missing data in rows", () => {
+    it("headers with missing data in rows", () => {
         const headers: TableHeader[] = [
             {
                 text: "Text1",
@@ -520,83 +582,83 @@ describe("Table", () => {
 });
 
 describe("Links", () => {
-    it("Simple link", () => {
+    it("simple", () => {
         const result = MarkdownGenerator.Link("Some text", "https://google.com/");
         expect(result).toMatchSnapshot();
     });
 
-    it("Simple link with a hover text", () => {
+    it("simple with a hover text", () => {
         const result = MarkdownGenerator.Link("Some text", "https://google.com/", "Hover text");
         expect(result).toMatchSnapshot();
     });
 
-    it("Link to definition", () => {
+    it("to definition", () => {
         const result = MarkdownGenerator.Link("Some text", "Google", true);
         expect(result).toMatchSnapshot();
     });
 
-    it("Link definition", () => {
+    it("definition", () => {
         const result = MarkdownGenerator.LinkDefinition("Some text", "https://google.com/");
         expect(result).toMatchSnapshot();
     });
 
-    it("Link definition with a hover text", () => {
+    it("definition with a hover text", () => {
         const result = MarkdownGenerator.LinkDefinition("Some text", "https://google.com/", "Hover text");
         expect(result).toMatchSnapshot();
     });
 });
 
 describe("Image", () => {
-    it("Simple image", () => {
+    it("simple", () => {
         const result = MarkdownGenerator.Image("Alt text", "https://path.com/image.jpg");
         expect(result).toMatchSnapshot();
     });
 
-    it("Simple image with a hover text", () => {
+    it("simple with a hover text", () => {
         const result = MarkdownGenerator.Image("Alt text", "https://google.com/", "Hover text");
         expect(result).toMatchSnapshot();
     });
 });
 
 describe("Horizontal rule", () => {
-    it("Simple horizontal rule", () => {
+    it("simple", () => {
         const result = MarkdownGenerator.HorizontalRule();
         expect(result).toMatchSnapshot();
     });
 
-    it("Custom length", () => {
+    it("custom length", () => {
         const result = MarkdownGenerator.HorizontalRule(undefined, 10);
         expect(result).toMatchSnapshot();
     });
 
-    it("Custom symbol", () => {
+    it("custom symbol", () => {
         const result = MarkdownGenerator.HorizontalRule("*");
         expect(result).toMatchSnapshot();
     });
 
-    it("Throws when length is lower than 3", () => {
+    it("throws when length is lower than 3", () => {
         expect(() => MarkdownGenerator.HorizontalRule(undefined, 0)).toThrow();
     });
 
-    it("Throws when symbol is not in allowed list.", () => {
+    it("throws when symbol is not in allowed list.", () => {
         expect(() => MarkdownGenerator.HorizontalRule("1" as any)).toThrow();
     });
 });
 
 describe("Escape string", () => {
-    it("Escape url", () => {
+    it("url", () => {
         const textToEscape = MarkdownGenerator.Link("Google", "https://google.com/");
         const result = MarkdownGenerator.EscapeString(textToEscape);
         expect(result).toMatchSnapshot();
     });
 
-    it("Escape symbols", () => {
+    it("symbols", () => {
         const textToEscape = "\ ` * _ { } [ ] ( ) # + - . ! | < >";
         const result = MarkdownGenerator.EscapeString(textToEscape);
         expect(result).toMatchSnapshot();
     });
 
-    it("Escaped character in table", () => {
+    it("character in table", () => {
         const headers = ["Name", "Constraint type", "Default type"];
         const rows = [
             ["TValue", "string", "text"],

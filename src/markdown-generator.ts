@@ -8,7 +8,9 @@ import {
     UnorderedListOptions,
     UnorderedListSymbols,
     MarkdownList,
-    HorizontalRuleSymbol
+    HorizontalRuleSymbol,
+    BlockquoteOptions,
+    InlineCodeOptions
 } from "./contracts";
 
 import { ListGenerator } from "./generators/list-generator";
@@ -55,13 +57,21 @@ export namespace MarkdownGenerator {
         ];
     }
 
-    export function Blockquote(text: string | string[]): string[] {
+    export function Blockquote(text: string | string[], options?: Partial<BlockquoteOptions>): string[] {
         let textLines: string[] = [];
+        const resolvedOptions: BlockquoteOptions = {
+            ...options
+        };
 
         if (typeof text === "string") {
             textLines = S(text).trim().lines();
         } else {
             textLines = text;
+        }
+
+        // Escape string
+        if (resolvedOptions.escapeGreaterThanChar != null) {
+            textLines = textLines.map(x => x.replace(/\>/g, resolvedOptions.escapeGreaterThanChar!));
         }
 
         const lines: string[] = [];
@@ -194,8 +204,17 @@ export namespace MarkdownGenerator {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    export function InlineCode(text: string): string {
-        const sanitizedText = S(text).trim().s;
+    export function InlineCode(text: string, options?: Partial<InlineCodeOptions>): string {
+        const resolvedOptions: InlineCodeOptions = {
+            escapeBacktickChar: "\\`",
+            ...options
+        };
+        let sanitizedText = S(text).trim().s;
+
+        // Escape
+        if (resolvedOptions.escapeBacktickChar != null) {
+            sanitizedText = sanitizedText.replace(/\`/g, resolvedOptions.escapeBacktickChar);
+        }
 
         return `\`${sanitizedText}\``;
     }
@@ -204,13 +223,22 @@ export namespace MarkdownGenerator {
      * Github flavored markdown
      * @see https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code
      */
-    export function Code(text: string | string[], options?: CodeOptions): string[] {
+    export function Code(text: string | string[], options?: Partial<CodeOptions>): string[] {
         let sanitizedText: string[] = [];
+        const resolvedOptions: CodeOptions = {
+            escapeBacktickChar: "\\`",
+            ...options
+        };
 
         if (typeof text === "string") {
             sanitizedText = S(text).trim().lines();
         } else {
             sanitizedText = text;
+        }
+
+        // Escape
+        if (resolvedOptions.escapeBacktickChar != null) {
+            sanitizedText = sanitizedText.map(x => x.replace(/\`/g, resolvedOptions.escapeBacktickChar!));
         }
 
         const codeBlockTag = "```";
@@ -227,7 +255,7 @@ export namespace MarkdownGenerator {
         ];
     }
 
-    export function Table(headers: Array<string | TableHeader>, content: string[][], options?: TableOptions): string[] {
+    export function Table(headers: Array<string | TableHeader>, content: string[][], options?: Partial<TableOptions>): string[] {
         return TableGenerator.RenderTable(headers, content, options);
     }
 
