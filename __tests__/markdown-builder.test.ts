@@ -1,7 +1,7 @@
 import { MarkdownBuilder } from "../src/markdown-builder";
 
 describe("MarkdownBuilder", () => {
-    it("Simple builder with GetOutput", () => {
+    it("simple with GetOutput", () => {
         const builder = new MarkdownBuilder()
             .Header("Builder simple example", 1)
             .EmptyLine()
@@ -10,7 +10,7 @@ describe("MarkdownBuilder", () => {
         expect(builder.GetOutput()).toMatchSnapshot();
     });
 
-    it("Simple builder with Build", () => {
+    it("simple with Build", () => {
         const builder = new MarkdownBuilder()
             .Header("Builder simple example", 1)
             .EmptyLine()
@@ -20,7 +20,7 @@ describe("MarkdownBuilder", () => {
         expect(builder.Build("\n")).toMatchSnapshot();
     });
 
-    it("All used methods", () => {
+    it("all used methods", () => {
         const builder = new MarkdownBuilder()
             .UnderlineHeader("Foo", 1)
             .EmptyLine()
@@ -59,7 +59,7 @@ describe("MarkdownBuilder", () => {
         expect(builder.GetOutput()).toMatchSnapshot();
     });
 
-    it("Append another Builder while constructing a new one", () => {
+    it("appends another Builder while constructing a new one", () => {
         const oldBuilder = new MarkdownBuilder()
             .UnderlineHeader("Hello Header", 1);
 
