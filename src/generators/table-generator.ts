@@ -17,14 +17,16 @@ export namespace TableGenerator {
 
         // Escape
         if (resolvedOptions.escapePipeChar != null) {
+            const escapePipeChar = resolvedOptions.escapePipeChar;
+
             // Headers
             headers = headers.map(header => {
                 if (typeof header === "string") {
-                    return header.replace(patternToEscape, resolvedOptions.escapePipeChar!);
+                    return header.replace(patternToEscape, escapePipeChar);
                 } else {
                     return {
                         ...header,
-                        text: header.text.replace(patternToEscape, resolvedOptions.escapePipeChar!)
+                        text: header.text.replace(patternToEscape, escapePipeChar)
                     };
                 }
             });
